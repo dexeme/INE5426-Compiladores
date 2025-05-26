@@ -1,0 +1,74 @@
+finite Ident {
+    initial ident0
+    ident0 A-Z -> ident1
+    ident0 a-z -> ident1
+    ident1 0-9 -> ident1
+    ident1 a-z -> ident1
+    ident1 A-Z -> ident1
+    final ident1
+}
+
+finite Int_constant {
+    initial int_constant0
+    int_constant0 0-9 -> int_constant1
+    int_constant1 0-9 -> int_constant1
+    final int_constant1
+}
+
+finite Float_constant {
+    initial float_constant0
+    float_constant0 0-9 -> float_constant1
+    float_constant1 0-9 -> float_constant1
+    float_constant1 "." -> float_constant2
+    float_constant2 0-9 -> float_constant3
+    float_constant3 0-9 -> float_constant3
+    final float_constant3
+}
+
+finite String_constant {
+    initial string_constant0
+    string_constant0 "\"" -> string_constant1
+    string_constant1 "#any" -> string_constant1
+    string_constant1 "\"" -> string_constant2
+    final string_constant2
+}
+
+
+finite Def = reenumerate <def> as "def"
+finite If = reenumerate <if> as "if"
+finite Else = reenumerate <else> as "else"
+finite For = reenumerate <for> as "for"
+finite Return = reenumerate <return> as "return"
+finite Break = reenumerate <break> as "break"
+finite New = reenumerate <new> as "new"
+finite Print_constant = reenumerate <print_constant> as "print_constant"
+finite Read = reenumerate <read> as "read"
+finite Null = reenumerate <null> as "null"
+finite Int = reenumerate <int> as "int"
+finite Float = reenumerate <float> as "float"
+finite String = reenumerate <string> as "string"
+finite Plus = reenumerate <\+> as "plus"
+finite Minus = reenumerate <\-> as "minus"
+finite Multiply = reenumerate <\*> as "multiply"
+finite Divide = reenumerate </> as "divide"
+finite Modulo = reenumerate <%> as "modulo"
+finite Equal = reenumerate <\=> as "equal"
+finite Equals = reenumerate <\==> as "equals"
+finite Not_equals = reenumerate <!=> as "not_equals"
+finite Less_than = reenumerate <\<> as "less_than"
+finite Greater_than = reenumerate <\>=> as "greater_than"
+finite Less_than_or_equal = reenumerate <\<=> as "less_than_or_equal"
+finite Greater_than_or_equal = reenumerate <\>=> as "greater_than_or_equal"
+finite Open_paren = reenumerate <\(> as "open_paren"
+finite Close_paren = reenumerate <\)> as "close_paren"
+finite Open_bracket = reenumerate <\[> as "open_bracket"
+finite Close_bracket = reenumerate <\]> as "close_bracket"
+finite Open_curly_brace = reenumerate <\{> as "open_curly_brace"
+finite Close_curly_brace = reenumerate <\}> as "close_curly_brace"
+finite Comma = reenumerate <,> as "semicolon"
+
+finite a = determinize(Ident | Int_constant | Float_constant | String_constant
+| Def | If | Else | For | Return | Break | New | Print_constant | Read | Null | Int | Float | String
+| Plus | Minus | Multiply | Divide | Modulo | Equal | Equals | Not_equals | Less_than | Greater_than
+| Less_than_or_equal | Greater_than_or_equal | Open_paren | Close_paren | Open_bracket | Close_bracket
+| Open_curly_brace | Close_curly_brace | Comma)
