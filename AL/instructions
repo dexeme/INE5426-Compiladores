@@ -1,3 +1,41 @@
+O que foi feito:
+- Primeiro, criei cada autômato utilizando a ferramenta https://krliam.github.io/automata/
+- Os autômatos que são diferentes (regras especiais) são: Ident, Int_constant,
+Float_constant e String_constant
+- Já os outros são renomeados com "reenumerate", como por exemplo, e ler "%" vai pro estado
+"modulo", já que não ficaria muito legível ter o nome do estado como "%".
+- Depois disso, uni todos esses autômatos, rodei e cliquei em "Copiar Json"
+- Esse Json é o mesmo que tá no arquivo "automaton.json". Assim, sempre que a gente
+precisar mexer na gramática, é só refazer esse processo e atualizar o arquivo.
+- PS: No final da entrega, não vamos precisar do arquivo "automaton.json", vamos deixar o
+autômato pronto, já que não vamos querer matar o tempo de execução do código parseando um
+Json de 4000 linhas.
+
+Agora sobre como os estados são nomeados e qual a lógica por trás:
+
+- Os estados são nomeados de forma a indicar o que eles representam. Por exemplo, o estado
+"def1,ident1" significa que estávamos no estado "Start", lemos um "d", e agora pode ser uma das
+duas opções: ou vai ser um identificador (ident1) ou uma palavra reservada (def1).
+- Por exemplo, se eu quiser ler "def main()", vai começar no estado "Start",
+e quando ler "d", vai para o estado "def1,ident1", depois "e" para o estado "def2,ident1",
+e assim por diante, até chegar no estado "def3,ident1". A dúvida que pode surgir é
+"tá, mas o que é esse "ident1" no final?". Isso é basicamente porque enquanto estamos lendo "def", não
+temos certeza se é um identificador ou não, então o autômato continua aceitando letras e números, como
+se fosse um identificador. Assim que ele ler um espaço, ele vai entender que chegou no final
+do token "def" e vai considerar que é um token válido. Se ele ler outro caractere que não seja
+um espaço, ele vai continuar no estado "ident1", que é o estado de identificador, e vai aceitar
+letras e números até que ele leia um espaço ou outro caractere que não seja permitido.
+
+Pra parsear o Json e fornecer pro AL
+
+- Pra isso criei um arquivo AutomatonReader, que faz o trabalho de parsear o arquivo Json
+e extrair as informações de estados finais, transições, etc.
+- Ele também cria o autômato a partir dessas informações, utilizando a classe Automaton.
+- Depois, criei a classe pro analisador léxico, que utiliza o autômato para ler o código fonte e identificar os tokens.
+- Pra testar é só rodar o código que está em "main"
+
+Abaixo fica o código pra vocês colarem no site e testarem:
+
 finite Ident {
     initial ident0
     ident0 A-Z -> ident1

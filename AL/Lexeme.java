@@ -1,9 +1,9 @@
 package AL;
 
-import AL.Token;
+public record Lexeme(TokenEnum type, String value, int lineNumber) {
 
-public class Lexeme {
-    private Token token;
-    private String lexeme;
-    private int line;
+    @Override
+    public String toString() {
+        return "(" + type + ", \"" + value + "\", " + lineNumber + ")";
+    }
 }
