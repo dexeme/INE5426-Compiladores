@@ -79,13 +79,13 @@ public class LexicalAnalyzer {
         if (finalState.startsWith("ident")) {
             return TokenEnum.IDENT;
         }
-        if (finalState.startsWith("int_constant")) {
+        if (finalState.contains("int_constant")) {
             return TokenEnum.INT_CONSTANT;
         }
-        if (finalState.startsWith("float_constant")) {
+        if (finalState.contains("float_constant")) {
             return TokenEnum.FLOAT_CONSTANT;
         }
-        if (finalState.startsWith("string_literal")) {
+        if (finalState.contains("string_constant") || finalState.contains("string")) {
             return TokenEnum.STRING_CONSTANT;
         }
 
