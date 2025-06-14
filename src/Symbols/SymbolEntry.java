@@ -1,5 +1,5 @@
 package Symbols;
 
-import AL.Lexeme;
+import AL.Token;
 
-public record SymbolEntry(Lexeme lexeme, int scope, SymbolEntry next) {}
+public record SymbolEntry(Token token, int scope, SymbolEntry next) {}

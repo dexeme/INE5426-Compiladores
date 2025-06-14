@@ -1,6 +1,6 @@
 import AL.Automaton;
 import AL.AutomatonReader;
-import AL.Lexeme;
+import AL.Token;
 import AL.LexicalAnalyzer;
 import Constants.Messages;
 
@@ -16,7 +16,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/simpleCode1WithLexicalErrors.txt";
+            String inputFilePath = "resources/instances/simpleCode1.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -29,9 +29,9 @@ public class Main {
             return;
         }
 
-        List<Lexeme> lexemes = lexicalAnalyzer.analyzeCode(sourceCode);
-        for (Lexeme lexeme : lexemes) {
-            System.out.println(lexeme);
+        List<Token> tokens = lexicalAnalyzer.analyzeCode(sourceCode);
+        for (Token token : tokens) {
+            System.out.println(token);
         }
 
         if (!lexicalAnalyzer.getErrors().isEmpty()) {

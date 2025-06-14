@@ -1,6 +1,6 @@
 package Symbols;
 
-import AL.Lexeme;
+import AL.Token;
 
 public class SymbolTable {
     private SymbolEntry head;
@@ -24,8 +24,8 @@ public class SymbolTable {
         }
     }
 
-    public void add(Lexeme lexeme) {
-        head = new SymbolEntry(lexeme, scopeLevel, head);
+    public void add(Token token) {
+        head = new SymbolEntry(token, scopeLevel, head);
     }
 
     public SymbolEntry getHead() {
@@ -41,7 +41,7 @@ public class SymbolTable {
         StringBuilder sb = new StringBuilder();
         SymbolEntry current = head;
         while (current != null) {
-            sb.append(current.lexeme()).append(", scope=").append(current.scope()).append('\n');
+            sb.append(current.token()).append(", scope=").append(current.scope()).append('\n');
             current = current.next();
         }
         return sb.toString();

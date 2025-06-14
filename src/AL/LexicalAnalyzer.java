@@ -17,10 +17,10 @@ public class LexicalAnalyzer {
         this.automaton = automaton;
     }
 
-    public List<Lexeme> analyzeCode(Map<Integer, String> lines) {
+    public List<Token> analyzeCode(Map<Integer, String> lines) {
         errors.clear();
         symbolTable.clear();
-        List<Lexeme> lexemes = new ArrayList<>();
+        List<Token> tokens = new ArrayList<>();
 
         for (Map.Entry<Integer, String> lineEntry : lines.entrySet()) {
             Integer lineNumber = lineEntry.getKey();
@@ -66,9 +66,9 @@ public class LexicalAnalyzer {
                         String lexemeStr = token.toString();
                         try {
                             TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
-                            Lexeme lex = new Lexeme(type, lexemeStr, lineNumber, column);
+                            Token lex = new Token(type, lexemeStr, lineNumber, column);
                             symbolTable.add(lex);
-                            lexemes.add(lex);
+                            tokens.add(lex);
                         } catch (LexicalException e) {
                             recordError(e);
                         }
@@ -82,8 +82,9 @@ public class LexicalAnalyzer {
                 }
             }
         }
+        System.out.println("Symbol Table:");
         System.out.println(symbolTable.toString());
-        return lexemes;
+        return tokens;
     }
 
     public List<LexicalException> getErrors() {
