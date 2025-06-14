@@ -1,4 +1,6 @@
 package AL;
+
+import Symbols.SymbolTable;
 import java.util.*;
 
 public class LexicalAnalyzer {
@@ -9,6 +11,7 @@ public class LexicalAnalyzer {
 
     private final Automaton automaton;
     private final List<LexicalException> errors = new ArrayList<>();
+    private final SymbolTable symbolTable = new SymbolTable();
 
     public LexicalAnalyzer(Automaton automaton) {
         this.automaton = automaton;
@@ -16,6 +19,7 @@ public class LexicalAnalyzer {
 
     public List<Lexeme> analyzeCode(Map<Integer, String> lines) {
         errors.clear();
+        symbolTable.clear();
         List<Lexeme> lexemes = new ArrayList<>();
 
         for (Map.Entry<Integer, String> lineEntry : lines.entrySet()) {
@@ -62,7 +66,9 @@ public class LexicalAnalyzer {
                         String lexemeStr = token.toString();
                         try {
                             TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
-                            lexemes.add(new Lexeme(type, lexemeStr, lineNumber, column));
+                            Lexeme lex = new Lexeme(type, lexemeStr, lineNumber, column);
+                            symbolTable.add(lex);
+                            lexemes.add(lex);
                         } catch (LexicalException e) {
                             recordError(e);
                         }
@@ -76,12 +82,16 @@ public class LexicalAnalyzer {
                 }
             }
         }
-
+        System.out.println(symbolTable.toString());
         return lexemes;
     }
 
     public List<LexicalException> getErrors() {
         return new ArrayList<>(errors);
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
     }
 
     private void recordError(LexicalException e) {
