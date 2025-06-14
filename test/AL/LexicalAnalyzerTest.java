@@ -30,21 +30,21 @@ public class LexicalAnalyzerTest {
         );
 
         List<Lexeme> expected = Arrays.asList(
-                new Lexeme(TokenEnum.DEF, "def", 1),
-                new Lexeme(TokenEnum.IDENT, "main", 1),
-                new Lexeme(TokenEnum.OPEN_PAREN, "(", 1),
-                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 1),
-                new Lexeme(TokenEnum.IDENT, "x", 2),
-                new Lexeme(TokenEnum.EQUAL, "=", 2),
-                new Lexeme(TokenEnum.INT_CONSTANT, "10", 2),
-                new Lexeme(TokenEnum.IF, "if", 3),
-                new Lexeme(TokenEnum.IDENT, "x", 3),
-                new Lexeme(TokenEnum.GREATER_THAN, ">", 3),
-                new Lexeme(TokenEnum.INT_CONSTANT, "5", 3),
-                new Lexeme(TokenEnum.PRINT, "print", 4),
-                new Lexeme(TokenEnum.OPEN_PAREN, "(", 4),
-                new Lexeme(TokenEnum.IDENT, "x", 4),
-                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 4)
+                new Lexeme(TokenEnum.DEF, "def", 1, 1),
+                new Lexeme(TokenEnum.IDENT, "main", 1, 5),
+                new Lexeme(TokenEnum.OPEN_PAREN, "(", 1, 9),
+                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 1, 10),
+                new Lexeme(TokenEnum.IDENT, "x", 2, 5),
+                new Lexeme(TokenEnum.EQUAL, "=", 2, 7),
+                new Lexeme(TokenEnum.INT_CONSTANT, "10", 2, 9),
+                new Lexeme(TokenEnum.IF, "if", 3, 5),
+                new Lexeme(TokenEnum.IDENT, "x", 3, 8),
+                new Lexeme(TokenEnum.GREATER_THAN, ">", 3, 10),
+                new Lexeme(TokenEnum.INT_CONSTANT, "5", 3, 12),
+                new Lexeme(TokenEnum.PRINT, "print", 4, 9),
+                new Lexeme(TokenEnum.OPEN_PAREN, "(", 4, 14),
+                new Lexeme(TokenEnum.IDENT, "x", 4, 15),
+                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 4, 16)
         );
         assertEquals(expected, tokens);
     }
@@ -53,17 +53,52 @@ public class LexicalAnalyzerTest {
     public void testFloatAndOperators() {
         List<Lexeme> tokens = analyze("value = 1.5 + 2");
         List<Lexeme> expected = Arrays.asList(
-                new Lexeme(TokenEnum.IDENT, "value", 1),
-                new Lexeme(TokenEnum.EQUAL, "=", 1),
-                new Lexeme(TokenEnum.FLOAT_CONSTANT, "1.5", 1),
-                new Lexeme(TokenEnum.PLUS, "+", 1),
-                new Lexeme(TokenEnum.INT_CONSTANT, "2", 1)
+                new Lexeme(TokenEnum.IDENT, "value", 1, 1),
+                new Lexeme(TokenEnum.EQUAL, "=", 1, 7),
+                new Lexeme(TokenEnum.FLOAT_CONSTANT, "1.5", 1, 9),
+                new Lexeme(TokenEnum.PLUS, "+", 1, 13),
+                new Lexeme(TokenEnum.INT_CONSTANT, "2", 1, 15)
         );
         assertEquals(expected, tokens);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void testInvalidSymbol() {
-        analyze("$");
+    @Test
+    public void testOneInvalidSymbolInInputCode() {
+        List<Lexeme> tokens = analyze("x @ 5");
+        List<Lexeme> expected = List.of(
+                new Lexeme(TokenEnum.IDENT, "x", 1, 1),
+                new Lexeme(TokenEnum.INT_CONSTANT, "5", 1, 5));
+        assertEquals(expected, tokens);
+        assertFalse(analyzer.getErrors().isEmpty());
+        assertEquals(1, analyzer.getErrors().size());
+        assertEquals(LexicalErrorType.INVALID_START, analyzer.getErrors().getFirst().getType());
+    }
+
+    @Test
+    public void TestMultipleLexicalErrors() {
+        List<Lexeme> tokens = analyze(
+                "def main()",
+                "    x @ 10",
+                "    if x > 5",
+                "        prin#(x)");
+        List<Lexeme> expected = List.of(
+                new Lexeme(TokenEnum.DEF, "def", 1, 1),
+                new Lexeme(TokenEnum.IDENT, "main", 1, 5),
+                new Lexeme(TokenEnum.OPEN_PAREN, "(", 1, 9),
+                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 1, 10),
+                new Lexeme(TokenEnum.IDENT, "x", 2, 5),
+                new Lexeme(TokenEnum.INT_CONSTANT, "10", 2, 9),
+                new Lexeme(TokenEnum.IF, "if", 3, 5),
+                new Lexeme(TokenEnum.IDENT, "x", 3, 8),
+                new Lexeme(TokenEnum.GREATER_THAN, ">", 3, 10),
+                new Lexeme(TokenEnum.INT_CONSTANT, "5", 3, 12),
+                new Lexeme(TokenEnum.IDENT, "prin", 4, 9),
+                new Lexeme(TokenEnum.OPEN_PAREN, "(", 4, 14),
+                new Lexeme(TokenEnum.IDENT, "x", 4, 15),
+                new Lexeme(TokenEnum.CLOSE_PAREN, ")", 4, 16)
+        );
+        assertEquals(expected, tokens);
+        assertFalse(analyzer.getErrors().isEmpty());
+        assertEquals(2, analyzer.getErrors().size());
     }
 }

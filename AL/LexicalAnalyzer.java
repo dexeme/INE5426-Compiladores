@@ -8,12 +8,14 @@ public class LexicalAnalyzer {
     private static final Map<String, TokenEnum> specialSymbols;
 
     private final Automaton automaton;
+    private final List<LexicalException> errors = new ArrayList<>();
 
     public LexicalAnalyzer(Automaton automaton) {
         this.automaton = automaton;
     }
 
     public List<Lexeme> analyzeCode(Map<Integer, String> lines) {
+        errors.clear();
         List<Lexeme> lexemes = new ArrayList<>();
 
         for (Map.Entry<Integer, String> lineEntry : lines.entrySet()) {
@@ -22,23 +24,34 @@ public class LexicalAnalyzer {
             int position = 0;
 
             while (position < line.length()) {
-                // Pular espaços antes de tentar reconhecer token
                 while (position < line.length() && Character.isWhitespace(line.charAt(position))) {
                     position++;
                 }
                 if (position >= line.length()) break;
 
+                int column = position + 1;
+                String startState = automaton.getInitialState();
+                String startCheck = automaton.getNextState(startState, String.valueOf(line.charAt(position)));
+                if (startCheck == null) {
+                    StringBuilder invalid = new StringBuilder();
+                    int startCol = column;
+                    while (position < line.length() && automaton.getNextState(startState, String.valueOf(line.charAt(position))) == null) {
+                        invalid.append(line.charAt(position));
+                        position++;
+                    }
+                    recordError(new LexicalException(LexicalErrorType.INVALID_START, invalid.toString(), lineNumber, startCol));
+                    continue;
+                }
+
                 StringBuilder token = new StringBuilder();
-                String currentState = automaton.getInitialState();
+                String currentState = startState;
 
                 while (position < line.length()) {
                     char symbol = line.charAt(position);
                     String nextState = automaton.getNextState(currentState, String.valueOf(symbol));
-
                     if (nextState == null) {
                         break;
                     }
-
                     token.append(symbol);
                     currentState = nextState;
                     position++;
@@ -47,14 +60,19 @@ public class LexicalAnalyzer {
                 if (!token.isEmpty()) {
                     if (automaton.isFinalState(currentState)) {
                         String lexemeStr = token.toString();
-                        TokenEnum type = classifyToken(lexemeStr, currentState);
-                        lexemes.add(new Lexeme(type, lexemeStr, lineNumber));
+                        try {
+                            TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
+                            lexemes.add(new Lexeme(type, lexemeStr, lineNumber, column));
+                        } catch (LexicalException e) {
+                            recordError(e);
+                        }
                     } else {
-                        throw new RuntimeException("Token inválido na linha " + lineNumber + ": " + token.toString());
+                        recordError(new LexicalException(LexicalErrorType.INVALID_TOKEN, token.toString(), lineNumber, column));
                     }
                 } else {
-                    //Se token é vazio e travou: símbolo inválido, consome 1 caractere pra não travar
-                    throw new RuntimeException("Símbolo inválido na linha " + lineNumber + ": " + line.charAt(position));
+                    char invalid = line.charAt(position);
+                    position++;
+                    recordError(new LexicalException(LexicalErrorType.INVALID_SYMBOL, String.valueOf(invalid), lineNumber, column));
                 }
             }
         }
@@ -62,7 +80,16 @@ public class LexicalAnalyzer {
         return lexemes;
     }
 
-    private TokenEnum classifyToken(String lexeme, String finalState) {
+    public List<LexicalException> getErrors() {
+        return new ArrayList<>(errors);
+    }
+
+    private void recordError(LexicalException e) {
+        errors.add(e);
+        System.out.println(e.getMessage());
+    }
+
+    private TokenEnum classifyToken(String lexeme, String finalState, int line, int column) {
         if (keywords.containsKey(lexeme)) {
             return keywords.get(lexeme);
         }
@@ -89,7 +116,7 @@ public class LexicalAnalyzer {
             return TokenEnum.STRING_CONSTANT;
         }
 
-        throw new RuntimeException("Token não reconhecido: " + lexeme);
+        throw new LexicalException(LexicalErrorType.UNRECOGNISED_TOKEN, lexeme, line, column);
     }
 
     static {

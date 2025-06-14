@@ -20,9 +20,12 @@ public class Main {
         sourceCode.put(4, "        print(x)");
 
         List<Lexeme> lexemes = lexicalAnalyzer.analyzeCode(sourceCode);
-
         for (Lexeme lexeme : lexemes) {
             System.out.println(lexeme);
+        }
+
+        if (!lexicalAnalyzer.getErrors().isEmpty()) {
+            System.out.println("Total lexical errors: " + lexicalAnalyzer.getErrors().size());
         }
     }
 }
