@@ -1,5 +1,5 @@
-package test.AL;
-import AL.*;
+package AL;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import java.util.*;
 public class LexicalAnalyzerTest {
     private static final LexicalAnalyzer analyzer;
     static {
-        Automaton automaton = AutomatonReader.readAutomaton("AL/automaton.json");
+        Automaton automaton = AutomatonReader.readAutomaton("resources/automaton.json");
         analyzer = new LexicalAnalyzer(automaton);
     }
 

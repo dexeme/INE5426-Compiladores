@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        String automatonFilePath = "AL/automaton.json";
+        String automatonFilePath = "resources/automaton.json";
 
         Automaton automaton = AutomatonReader.readAutomaton(automatonFilePath);
 
@@ -16,7 +16,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "Constants/Instances/simpleCode1WithLexicalErrors.txt";
+            String inputFilePath = "resources/instances/simpleCode1WithLexicalErrors.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
