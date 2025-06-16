@@ -1,31 +1,62 @@
 package Syntax;
 
 import AL.Token;
+import AL.TokenEnum;
 
 public class Symbol {
+    private final String name;
+    private final boolean terminal;
+    private final TokenEnum tokenType;
 
-    // TODO
-    public Symbol() {
+    private Symbol(String name, boolean terminal, TokenEnum tokenType) {
+        this.name = name;
+        this.terminal = terminal;
+        this.tokenType = tokenType;
     }
 
-    // TODO
+    public static Symbol terminal(TokenEnum type) {
+        return new Symbol(type.name(), true, type);
+    }
+
+    public static Symbol nonTerminal(String name) {
+        return new Symbol(name, false, null);
+    }
+
     public boolean equalsToken(Token token) {
-        return false;
+        return terminal && token.type() == tokenType;
     }
 
-    // TODO
     public boolean isTerminal() {
-        return false;
+        return terminal;
     }
 
-    // TODO
+    public String getName() {
+        return name;
+    }
+
+    public TokenEnum getTokenType() {
+        return tokenType;
+    }
+
+    private static final Symbol START = nonTerminal("E");
+    private static final Symbol END = terminal(TokenEnum.END);
+    public static final Symbol E = START;
+    public static final Symbol E_PRIME = nonTerminal("E'");
+    public static final Symbol T = nonTerminal("T");
+    public static final Symbol PLUS = terminal(TokenEnum.PLUS);
+    public static final Symbol INT = terminal(TokenEnum.INT_CONSTANT);
+    public static final Symbol EPSILON = new Symbol("ε", true, null);
+
     public static Symbol startSymbol() {
-        return new Symbol();
+        return START;
     }
 
-    // TODO
     public static Symbol endSymbol() {
-        return new Symbol();
+        return END;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

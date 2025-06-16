@@ -50,7 +50,7 @@ public class AutomatonReader {
     }
 
     private static String clean(String text) {
-        return text.replace("\\", "").replace("{", "").replace("}", "").trim();
+        return text.replace("\\", "").trim();
     }
 
     private static String extractValue(String json, String key) {
@@ -131,7 +131,7 @@ public class AutomatonReader {
             String fromState = parts[0].replace("\\", "").trim();
             String symbol = parts[1].replace("\\", "").trim();
 
-            value = value.replaceAll("[\\[\\]\"]", "").replace("\\", "").replace("}", "").trim();
+            value = value.replaceAll("[\\[\\]\"]", "").replace("\\", "").trim();
 
             transitions.put(new String[]{fromState, symbol}, value);
         }
@@ -146,7 +146,7 @@ public class AutomatonReader {
             if (elem.startsWith("\"") && elem.endsWith("\"")) {
                 elem = elem.substring(1, elem.length() - 1);
             }
-            elem = elem.replace("\\", "").replace("{", "").replace("}", "").replace("[", "").replace("]", "").trim();
+            elem = elem.replace("\\", "").replace("[", "").replace("]", "").trim();
             result.set(i, elem);
         }
         return result.toArray(new String[0]);

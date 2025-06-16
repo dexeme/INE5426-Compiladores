@@ -1,5 +1,6 @@
-package AL;
+package test.AL;
 
+import AL.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,17 +24,20 @@ public class LexicalAnalyzerTest {
     @Test
     public void testSimpleProgram() {
         List<Token> tokens = analyze(
-                "def main()",
+                "def main(int a){ ",
                 "    x = 10",
                 "    if x > 5",
-                "        print(x)"
+                "        print(x)}"
         );
 
         List<Token> expected = Arrays.asList(
                 new Token(TokenEnum.DEF, "def", 1, 1),
                 new Token(TokenEnum.IDENT, "main", 1, 5),
                 new Token(TokenEnum.OPEN_PAREN, "(", 1, 9),
-                new Token(TokenEnum.CLOSE_PAREN, ")", 1, 10),
+                new Token(TokenEnum.INT, "int", 1, 10),
+                new Token(TokenEnum.IDENT, "a", 1, 14),
+                new Token(TokenEnum.CLOSE_PAREN, ")", 1, 15),
+                new Token(TokenEnum.OPEN_CURLY_BRACE, "{", 1, 16),
                 new Token(TokenEnum.IDENT, "x", 2, 5),
                 new Token(TokenEnum.EQUAL, "=", 2, 7),
                 new Token(TokenEnum.INT_CONSTANT, "10", 2, 9),
@@ -44,7 +48,8 @@ public class LexicalAnalyzerTest {
                 new Token(TokenEnum.PRINT, "print", 4, 9),
                 new Token(TokenEnum.OPEN_PAREN, "(", 4, 14),
                 new Token(TokenEnum.IDENT, "x", 4, 15),
-                new Token(TokenEnum.CLOSE_PAREN, ")", 4, 16)
+                new Token(TokenEnum.CLOSE_PAREN, ")", 4, 16),
+                new Token(TokenEnum.CLOSE_CURLY_BRACE, "}", 4, 17)
         );
         assertEquals(expected, tokens);
     }

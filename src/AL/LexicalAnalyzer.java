@@ -1,6 +1,7 @@
 package AL;
 
 import Symbols.SymbolTable;
+import Constants.Messages;
 import java.util.*;
 
 public class LexicalAnalyzer {
@@ -82,7 +83,7 @@ public class LexicalAnalyzer {
                 }
             }
         }
-        System.out.println("Symbol Table:");
+        System.out.println(Messages.SYMBOL_TABLE_HEADER);
         System.out.println(symbolTable.toString());
         return tokens;
     }
@@ -114,7 +115,7 @@ public class LexicalAnalyzer {
             return specialSymbols.get(lexeme);
         }
 
-        if (finalState.startsWith("ident")) {
+        if (finalState.contains("ident")) {
             return TokenEnum.IDENT;
         }
         if (finalState.contains("int_constant")) {
@@ -141,7 +142,10 @@ public class LexicalAnalyzer {
                 Map.entry("new", TokenEnum.NEW),
                 Map.entry("print", TokenEnum.PRINT),
                 Map.entry("read", TokenEnum.READ),
-                Map.entry("null", TokenEnum.NULL)
+                Map.entry("null", TokenEnum.NULL),
+                Map.entry("int", TokenEnum.INT),
+                Map.entry("float", TokenEnum.FLOAT),
+                Map.entry("string", TokenEnum.STRING)
         );
 
         operators = Map.ofEntries(

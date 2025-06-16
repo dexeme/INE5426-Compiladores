@@ -3,6 +3,8 @@ import AL.AutomatonReader;
 import AL.Token;
 import AL.LexicalAnalyzer;
 import Constants.Messages;
+import Syntax.Parser;
+import AST.ProgramNode;
 
 import java.util.*;
 
@@ -37,5 +39,10 @@ public class Main {
         if (!lexicalAnalyzer.getErrors().isEmpty()) {
             System.out.println(Messages.TOTAL_LEXICAL_ERRORS + lexicalAnalyzer.getErrors().size());
         }
+
+        Parser parser = new Parser(tokens);
+        ProgramNode program = parser.parse();
+        System.out.println(Messages.AST_HEADER);
+        System.out.println(program.toTree());
     }
 }
