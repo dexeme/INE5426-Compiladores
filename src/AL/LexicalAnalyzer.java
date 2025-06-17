@@ -35,6 +35,32 @@ public class LexicalAnalyzer {
                 if (position >= line.length()) break;
 
                 int column = position + 1;
+                char first = line.charAt(position);
+                if (first == ';') {
+                    Token tok = new Token(TokenEnum.SEMICOLON, ";", lineNumber, column);
+                    symbolTable.add(tok);
+                    tokens.add(tok);
+                    position++;
+                    continue;
+                } else if (first == '"') {
+                    int startCol = column;
+                    StringBuilder sb = new StringBuilder();
+                    position++;
+                    while (position < line.length() && line.charAt(position) != '"') {
+                        sb.append(line.charAt(position));
+                        position++;
+                    }
+                    if (position < line.length() && line.charAt(position) == '"') {
+                        position++;
+                        String lex = "\"" + sb + "\"";
+                        Token tok = new Token(TokenEnum.STRING_CONSTANT, lex, lineNumber, startCol);
+                        symbolTable.add(tok);
+                        tokens.add(tok);
+                    } else {
+                        recordError(new LexicalException(LexicalErrorType.INVALID_TOKEN, sb.toString(), lineNumber, startCol));
+                    }
+                    continue;
+                }
                 String startState = automaton.getInitialState();
                 String startCheck = automaton.getNextState(startState, String.valueOf(line.charAt(position)));
                 if (startCheck == null) {
@@ -145,7 +171,8 @@ public class LexicalAnalyzer {
                 Map.entry("null", TokenEnum.NULL),
                 Map.entry("int", TokenEnum.INT),
                 Map.entry("float", TokenEnum.FLOAT),
-                Map.entry("string", TokenEnum.STRING)
+                Map.entry("string", TokenEnum.STRING),
+                Map.entry("endif", TokenEnum.ENDIF)
         );
 
         operators = Map.ofEntries(

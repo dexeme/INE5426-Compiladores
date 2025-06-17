@@ -39,5 +39,6 @@ public enum TokenEnum {
     CLOSE_CURLY_BRACE,
     COMMA,
     SEMICOLON,
+    ENDIF,
     END
 }

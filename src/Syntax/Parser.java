@@ -21,7 +21,13 @@ public class Parser {
         if (match(TokenEnum.DEF)) {
             String name = consume(TokenEnum.IDENT, Messages.ERROR_UNEXPECTED_TOKEN).value();
             consume(TokenEnum.OPEN_PAREN, Messages.ERROR_UNEXPECTED_TOKEN);
-            // todo: permitir argumentos
+            List<String> params = new ArrayList<>();
+            if (!check(TokenEnum.CLOSE_PAREN)) {
+                do {
+                    consume(TokenEnum.INT, Messages.ERROR_UNEXPECTED_TOKEN);
+                    params.add(consume(TokenEnum.IDENT, Messages.ERROR_UNEXPECTED_TOKEN).value());
+                } while (match(TokenEnum.COMMA));
+            }
             consume(TokenEnum.CLOSE_PAREN, Messages.ERROR_UNEXPECTED_TOKEN);
 
             match(TokenEnum.OPEN_CURLY_BRACE); // optional function block start
@@ -32,12 +38,17 @@ public class Parser {
             }
 
             match(TokenEnum.CLOSE_CURLY_BRACE); // optional function block end
-            funcs.add(new FunctionNode(name, body));
+            funcs.add(new FunctionNode(name, params, body));
         }
         return new ProgramNode(funcs);
     }
 
     public List<SyntaxException> getErrors() { return errors; }
+
+    private void recordError(SyntaxException e) {
+        errors.add(e);
+        System.out.println(e.getMessage());
+    }
 
     private StatementNode parseStatement() {
         if (check(TokenEnum.IDENT) && checkNext(TokenEnum.EQUAL)) {
@@ -57,7 +68,7 @@ public class Parser {
             List<Token> conditionTokens = collectUntilLineChange();
             ExpressionNode cond = parseExpression(conditionTokens);
             if (isAtEnd()) {
-                errors.add(new SyntaxException(Messages.ERROR_UNEXPECTED_EOF, previous()));
+                recordError(new SyntaxException(Messages.ERROR_UNEXPECTED_EOF, previous()));
                 return new PrintNode(new VarNode(""));
             }
             StatementNode thenStmt = parseStatement();
@@ -65,7 +76,7 @@ public class Parser {
         }
         Token t = advance();
         SyntaxException e = new SyntaxException(Messages.ERROR_UNEXPECTED_TOKEN, t);
-        errors.add(e);
+        recordError(e);
         return new PrintNode(new VarNode(""));
     }
 
@@ -127,8 +138,10 @@ public class Parser {
     private Token consume(TokenEnum type, String message) {
         if (check(type)) return advance();
         SyntaxException e = new SyntaxException(message, peek());
-        errors.add(e);
-        throw e;
+        recordError(e);
+        if (!isAtEnd()) advance();
+        Token current = previous();
+        return new Token(type, current.value(), current.line(), current.column());
     }
 
     private Token advance() {

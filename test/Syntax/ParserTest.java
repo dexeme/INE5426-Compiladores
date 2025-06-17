@@ -16,13 +16,17 @@ public class ParserTest {
         analyzer = new LexicalAnalyzer(automaton);
     }
 
-    private ProgramNode parse(String... lines) {
+    private Parser newParser(String... lines) {
         Map<Integer, String> src = new LinkedHashMap<>();
         for (int i = 0; i < lines.length; i++) {
             src.put(i + 1, lines[i]);
         }
         List<Token> tokens = analyzer.analyzeCode(src);
-        Parser parser = new Parser(tokens);
+        return new Parser(tokens);
+    }
+
+    private ProgramNode parse(String... lines) {
+        Parser parser = newParser(lines);
         return parser.parse();
     }
 
@@ -72,5 +76,35 @@ public class ParserTest {
                 "        Var x"
         );
         assertEquals(expected, tree);
+    }
+
+    @Test
+    public void testMainWithParametersAndLoop() {
+        Parser parser = newParser(
+                "def main(int a, int b){",
+                "    string operacao;",
+                "    int i;",
+                "    for (i = 1; i > 0; i = i + 1) {",
+                "        print \"Qual operação desejas que eu calcule?\";",
+                "        read operacao;",
+                "        if (operacao == \"sair\") {",
+                "            break;",
+                "        } endif",
+                "        if (operacao == \"fatorial\") {",
+                "            read a;",
+                "            int j;",
+                "            j = calcularFatorial(a);",
+                "        } else {",
+                "            read a;",
+                "            read b;",
+                "            int j;",
+                "            j = calcular(operacao, a, b);",
+                "        } endif",
+                "    }",
+                "}"
+        );
+
+        ProgramNode program = parser.parse();
+        assertFalse(program.getFunctions().isEmpty());
     }
 }
