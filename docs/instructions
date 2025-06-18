@@ -94,7 +94,7 @@ finite Equal = reenumerate <\=> as "equal"
 finite Equals = reenumerate <\==> as "equals"
 finite Not_equals = reenumerate <!=> as "not_equals"
 finite Less_than = reenumerate <\<> as "less_than"
-finite Greater_than = reenumerate <\>=> as "greater_than"
+finite Greater_than = reenumerate <\>> as "greater_than"
 finite Less_than_or_equal = reenumerate <\<=> as "less_than_or_equal"
 finite Greater_than_or_equal = reenumerate <\>=> as "greater_than_or_equal"
 finite Open_paren = reenumerate <\(> as "open_paren"
@@ -103,10 +103,11 @@ finite Open_bracket = reenumerate <\[> as "open_bracket"
 finite Close_bracket = reenumerate <\]> as "close_bracket"
 finite Open_curly_brace = reenumerate <\{> as "open_curly_brace"
 finite Close_curly_brace = reenumerate <\}> as "close_curly_brace"
-finite Comma = reenumerate <,> as "semicolon"
+finite Comma = reenumerate <,> as "comma"
+finite Semicolon = reenumerate <;> as "semicolon"
 
 finite a = determinize(Ident | Int_constant | Float_constant | String_constant
 | Def | If | Else | For | Return | Break | New | Print_constant | Read | Null | Int | Float | String
 | Plus | Minus | Multiply | Divide | Modulo | Equal | Equals | Not_equals | Less_than | Greater_than
 | Less_than_or_equal | Greater_than_or_equal | Open_paren | Close_paren | Open_bracket | Close_bracket
-| Open_curly_brace | Close_curly_brace | Comma)
+| Open_curly_brace | Close_curly_brace | Comma | Semicolon)
