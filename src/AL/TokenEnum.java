@@ -1,6 +1,8 @@
 package AL;
 
-public enum TokenEnum {
+import Symbols.Symboll;
+
+public enum TokenEnum  implements Symboll {
     KEYWORD,
     DEF,
     IF,
