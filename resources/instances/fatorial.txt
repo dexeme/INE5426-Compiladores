@@ -2,7 +2,7 @@ def main(int a, int b){
     string operacao;
     int i;
     for (i = 1; i > 0; i = i + 1) {
-        print "Qual operação desejas que eu calcule?";
+        print "Qual operação deseja realizar?";
         read operacao;
         if (operacao == "sair") {
             break;

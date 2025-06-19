@@ -1,42 +1,45 @@
-package test.Syntax;
+package test.AS;
 
 import AL.*;
 import AST.ProgramNode;
-import Syntax.Parser;
+import AS.SyntaxAnalyzer;
+import Syntax.SyntaxException;
 import org.junit.Test;
 
 import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class ParserTest {
+public class SyntaxAnalyzerTest {
     private static final LexicalAnalyzer analyzer;
     static {
         Automaton automaton = AutomatonReader.readAutomaton("resources/automaton.json");
         analyzer = new LexicalAnalyzer(automaton);
     }
 
-    private Parser newParser(String... lines) {
+    private SyntaxAnalyzer newAnalyzer(String... lines) {
         Map<Integer, String> src = new LinkedHashMap<>();
         for (int i = 0; i < lines.length; i++) {
             src.put(i + 1, lines[i]);
         }
         List<Token> tokens = analyzer.analyzeCode(src);
-        return new Parser(tokens);
+        return new SyntaxAnalyzer(tokens);
     }
 
     private ProgramNode parse(String... lines) {
-        Parser parser = newParser(lines);
-        return parser.parse();
+        SyntaxAnalyzer sa = newAnalyzer(lines);
+        return sa.parse();
     }
 
     @Test
     public void testSimpleProgramAST() {
         ProgramNode program = parse(
                 "def main(){",
-                "    x = 10",
-                "    if x > 5",
-                "        print(x)}"
+                "    x = 10;",
+                "    if (x > 5){",
+                "        print x;",
+                "    }",
+                "}"
         );
         String tree = program.toTree().trim();
         String expected = String.join("\n",
@@ -58,9 +61,11 @@ public class ParserTest {
     public void testProgramWithBraces() {
         ProgramNode program = parse(
                 "def main(){",
-                "    x = 10",
-                "    if x > 5",
-                "        print(x)}"
+                "    x = 10;",
+                "    if (x > 5){",
+                "        print x;",
+                "    }",
+                "}"
         );
         String tree = program.toTree().trim();
         String expected = String.join("\n",
@@ -80,7 +85,7 @@ public class ParserTest {
 
     @Test
     public void testMainWithParametersAndLoop() {
-        Parser parser = newParser(
+        SyntaxAnalyzer parser = newAnalyzer(
                 "def main(int a, int b){",
                 "    string operacao;",
                 "    int i;",
@@ -89,7 +94,7 @@ public class ParserTest {
                 "        read operacao;",
                 "        if (operacao == \"sair\") {",
                 "            break;",
-                "        } endif",
+                "        }",
                 "        if (operacao == \"fatorial\") {",
                 "            read a;",
                 "            int j;",
@@ -99,12 +104,26 @@ public class ParserTest {
                 "            read b;",
                 "            int j;",
                 "            j = calcular(operacao, a, b);",
-                "        } endif",
+                "        }",
                 "    }",
                 "}"
         );
 
         ProgramNode program = parser.parse();
         assertFalse(program.getFunctions().isEmpty());
+    }
+
+    @Test
+    public void testSyntaxErrorMessage() {
+        SyntaxAnalyzer analyzer = newAnalyzer(
+                "def main()",
+                "else"
+        );
+        ProgramNode program = analyzer.parse();
+        assertNotNull(program);
+        assertFalse(analyzer.getErrors().isEmpty());
+        SyntaxException e = analyzer.getErrors().getFirst();
+        assertTrue(e.getMessage().contains("line 2"));
+        assertTrue(e.getMessage().contains("column 1"));
     }
 }

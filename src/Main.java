@@ -3,7 +3,7 @@ import AL.AutomatonReader;
 import AL.Token;
 import AL.LexicalAnalyzer;
 import Constants.Messages;
-import Syntax.Parser;
+import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
 
 import java.util.*;
@@ -32,6 +32,7 @@ public class Main {
         }
 
         List<Token> tokens = lexicalAnalyzer.analyzeCode(sourceCode);
+        System.out.println(Messages.SYMBOL_TABLE_HEADER);
         for (Token token : tokens) {
             System.out.println(token);
         }
@@ -40,10 +41,14 @@ public class Main {
             System.out.println(Messages.TOTAL_LEXICAL_ERRORS + lexicalAnalyzer.getErrors().size());
         }
 
-        Parser parser = new Parser(tokens);
-        ProgramNode program = parser.parse();
-        String tree = program.toTree().trim();
-        System.out.println(Messages.AST_HEADER);
-        System.out.println(tree);
+        SyntaxAnalyzer syntax = new SyntaxAnalyzer(tokens);
+        ProgramNode ast = syntax.parse();
+        if (!syntax.getErrors().isEmpty()) {
+            System.out.println(Messages.TOTAL_SYNTAX_ERRORS + syntax.getErrors().size());
+        } else {
+            System.out.println(Messages.NO_SYNTAX_ERRORS);
+            System.out.println(Messages.AST_HEADER);
+            System.out.println(ast.toTree());
+        }
     }
 }

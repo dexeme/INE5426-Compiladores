@@ -1,3 +1,5 @@
+-------- ANÁLISE LÉXICA --------
+
 O que foi feito:
 - Primeiro, criei cada autômato utilizando a ferramenta https://krliam.github.io/automata/
 - Os autômatos que são diferentes (regras especiais) são: Ident, Int_constant,
@@ -157,3 +159,27 @@ finite a = determinize(Ident | Int_constant | Float_constant | String_constant
 | Plus | Minus | Multiply | Divide | Modulo | Equal | Equals | Not_equals | Less_than | Greater_than
 | Less_than_or_equal | Greater_than_or_equal | Open_paren | Close_paren | Open_bracket | Close_bracket
 | Open_curly_brace | Close_curly_brace | Comma | Semicolon)
+
+----- ANÁLISE SINTÁTICA -----
+
+Como funciona a AST:
+- A AST é uma árvore que representa a estrutura do código fonte.
+- Cada nó da árvore representa uma construção sintática do código,
+como uma expressão, uma declaração, um bloco de código, etc.
+- A raiz da árvore é o nó que representa o programa como um t0do, no nosso caso é o nó "Program".
+- Os filhos da raiz são os nós que representam as declarações do programa,
+como funções, variáveis, etc.
+- Cada nó pode ter filhos, que representam as partes da construção sintática.
+- Por exemplo, um nó que representa uma função pode ter filhos que representam o nome da função,
+os parâmetros da função, o corpo da função, etc.
+
+Montagem da AST:
+- A AST é montada a partir da análise sintática do código fonte.
+- A montagem é feita dentro da classe 'SyntaxAnalyzer'
+- O método parse() cria a lista de funções e, ao final, retorna o nó raiz (Program).
+- Cada função guarda seu body (lista de StatementNode)
+- Os nós específicos (ex.: AssignmentNode, IfNode, ForNode, etc.) são construídos em parseStatement(), conforme os
+tokens são lidos.
+- O retorno do método parse(), (que é o nó Program), é a AST, e pra exibir a árvore, basta chamar o método
+toTree()
+- A AST é exibida no console, e pode ser visualizada como uma árvore.

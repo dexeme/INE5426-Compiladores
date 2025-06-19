@@ -109,8 +109,6 @@ public class LexicalAnalyzer {
                 }
             }
         }
-        System.out.println(Messages.SYMBOL_TABLE_HEADER);
-        System.out.println(symbolTable.toString());
         return tokens;
     }
 
@@ -150,7 +148,7 @@ public class LexicalAnalyzer {
         if (finalState.contains("float_constant")) {
             return TokenEnum.FLOAT_CONSTANT;
         }
-        if (finalState.contains("string_constant") || finalState.contains("string")) {
+        if (finalState.contains("string_constant")) {
             return TokenEnum.STRING_CONSTANT;
         }
 
