@@ -1,0 +1,21 @@
+def main(int a, int b){
+    string operacao;
+    int i;
+    for (i = 1; i > 0; i = i + 1) {
+        print "Qual operação desejas que eu calcule?";
+        read operacao;
+        if (operacao == "sair") {
+            break;
+        }
+        if (operacao == "fatorial") {
+            read a;
+            int j;
+            j = calcularFatorial(a);
+        } else {
+            read a;
+            read b;
+            int j;
+            j = calcular(operacao, a, b);
+        }
+    }
+}

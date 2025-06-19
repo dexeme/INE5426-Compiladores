@@ -126,8 +126,7 @@ public class LexicalAnalyzerTest {
                 new Token(TokenEnum.IDENT, "x", 2, 11),
                 new Token(TokenEnum.CLOSE_PAREN, ")", 2, 12),
                 new Token(TokenEnum.SEMICOLON, ";", 2, 13),
-                new Token(TokenEnum.CLOSE_CURLY_BRACE, "}", 3, 1),
-                new Token(TokenEnum.ENDIF, "endif", 3, 3)
+                new Token(TokenEnum.CLOSE_CURLY_BRACE, "}", 3, 1)
         );
         assertEquals(expected, tokens);
         assertTrue(analyzer.getErrors().isEmpty());
@@ -185,7 +184,6 @@ public class LexicalAnalyzerTest {
 
         List<TokenEnum> types = tokens.stream().map(Token::type).toList();
         assertTrue(types.contains(TokenEnum.FOR));
-        assertTrue(types.contains(TokenEnum.ENDIF));
         assertTrue(types.contains(TokenEnum.SEMICOLON));
         assertTrue(analyzer.getErrors().isEmpty());
     }

@@ -171,8 +171,7 @@ public class LexicalAnalyzer {
                 Map.entry("null", TokenEnum.NULL),
                 Map.entry("int", TokenEnum.INT),
                 Map.entry("float", TokenEnum.FLOAT),
-                Map.entry("string", TokenEnum.STRING),
-                Map.entry("endif", TokenEnum.ENDIF)
+                Map.entry("string", TokenEnum.STRING)
         );
 
         operators = Map.ofEntries(

@@ -18,7 +18,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/simpleCode1.txt";
+            String inputFilePath = "resources/instances/fatorial.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -42,7 +42,8 @@ public class Main {
 
         Parser parser = new Parser(tokens);
         ProgramNode program = parser.parse();
+        String tree = program.toTree().trim();
         System.out.println(Messages.AST_HEADER);
-        System.out.println(program.toTree());
+        System.out.println(tree);
     }
 }

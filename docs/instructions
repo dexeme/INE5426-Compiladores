@@ -66,7 +66,53 @@ finite Float_constant {
 finite String_constant {
     initial string_constant0
     string_constant0 "\"" -> string_constant1
-    string_constant1 "#any" -> string_constant1
+    string_constant1 0-9 -> string_constant1
+    string_constant1 a-z -> string_constant1
+    string_constant1 A-Z -> string_constant1
+    string_constant1 "." -> string_constant1
+    string_constant1 "?" -> string_constant1
+    string_constant1 "!" -> string_constant1
+    string_constant1 "#" -> string_constant1
+    string_constant1 "@" -> string_constant1
+    string_constant1 "&" -> string_constant1
+    string_constant1 "*" -> string_constant1
+    string_constant1 ")" -> string_constant1
+    string_constant1 "(" -> string_constant1
+    string_constant1 "-" -> string_constant1
+    string_constant1 "_" -> string_constant1
+    string_constant1 "=" -> string_constant1
+    string_constant1 "+" -> string_constant1
+    string_constant1 "/" -> string_constant1
+    string_constant1 ":" -> string_constant1
+    string_constant1 ";" -> string_constant1
+    string_constant1 "," -> string_constant1
+    string_constant1 "<" -> string_constant1
+    string_constant1 ">" -> string_constant1
+    string_constant1 "[" -> string_constant1
+    string_constant1 "]" -> string_constant1
+    string_constant1 "{" -> string_constant1
+    string_constant1 "}" -> string_constant1
+    string_constant1 "'" -> string_constant1
+    string_constant1 "%" -> string_constant1
+    string_constant1 "^" -> string_constant1
+    string_constant1 "~" -> string_constant1
+    string_constant1 "`" -> string_constant1
+    string_constant1 "ç" -> string_constant1
+    string_constant1 "ã" -> string_constant1
+    string_constant1 "ẽ" -> string_constant1
+    string_constant1 "ĩ" -> string_constant1
+    string_constant1 "õ" -> string_constant1
+    string_constant1 "ũ" -> string_constant1
+    string_constant1 "â" -> string_constant1
+    string_constant1 "ê" -> string_constant1
+    string_constant1 "î" -> string_constant1
+    string_constant1 "ô" -> string_constant1
+    string_constant1 "û" -> string_constant1
+    string_constant1 "á" -> string_constant1
+    string_constant1 "é" -> string_constant1
+    string_constant1 "í" -> string_constant1
+    string_constant1 "ó" -> string_constant1
+    string_constant1 "ú" -> string_constant1
     string_constant1 "\"" -> string_constant2
     final string_constant2
 }

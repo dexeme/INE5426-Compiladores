@@ -12,22 +12,22 @@
     "ident1,read1,return1",
     "ident1,string1",
     "float_constant1,int_constant1",
-    "plus1",
-    "minus1",
     "multiply1",
-    "divide1",
-    "modulo1",
+    "close_paren1",
+    "open_paren1",
+    "minus1",
     "equal1,equals1",
+    "plus1",
+    "divide1",
+    "semicolon1",
+    "comma1",
     "less_than1,less_than_or_equal1",
     "greater_than1,greater_than_or_equal1",
-    "open_paren1",
-    "close_paren1",
     "open_bracket1",
     "close_bracket1",
     "open_curly_brace1",
     "close_curly_brace1",
-    "comma1",
-    "semicolon1",
+    "modulo1",
     "break2,ident1",
     "def2,ident1",
     "else2,ident1",
@@ -41,8 +41,8 @@
     "ident1,read2,return2",
     "ident1,string2",
     "string_constant2",
-    "equals2",
     "not_equals2",
+    "equals2",
     "less_than_or_equal2",
     "greater_than_or_equal2",
     "break3,ident1",
@@ -265,38 +265,41 @@
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"\\\"\"]": [
       "string_constant1"
     ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"+\"]": [
-      "plus1"
-    ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"-\"]": [
-      "minus1"
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"!\"]": [
+      "not_equals1"
     ],
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"*\"]": [
       "multiply1"
     ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"/\"]": [
-      "divide1"
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\")\"]": [
+      "close_paren1"
     ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"%\"]": [
-      "modulo1"
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"(\"]": [
+      "open_paren1"
+    ],
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"-\"]": [
+      "minus1"
     ],
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"=\"]": [
       "equal1,equals1"
     ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"!\"]": [
-      "not_equals1"
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"+\"]": [
+      "plus1"
+    ],
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"/\"]": [
+      "divide1"
+    ],
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\";\"]": [
+      "semicolon1"
+    ],
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\",\"]": [
+      "comma1"
     ],
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"<\"]": [
       "less_than1,less_than_or_equal1"
     ],
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\">\"]": [
       "greater_than1,greater_than_or_equal1"
-    ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"(\"]": [
-      "open_paren1"
-    ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\")\"]": [
-      "close_paren1"
     ],
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"[\"]": [
       "open_bracket1"
@@ -310,11 +313,8 @@
     "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"}\"]": [
       "close_curly_brace1"
     ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\",\"]": [
-      "comma1"
-    ],
-    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\";\"]": [
-      "semicolon1"
+    "[\"break0,close_bracket0,close_curly_brace0,close_paren0,comma0,def0,divide0,else0,equal0,equals0,float0,float_constant0,for0,greater_than0,greater_than_or_equal0,ident0,if0,int0,int_constant0,less_than0,less_than_or_equal0,minus0,modulo0,multiply0,new0,not_equals0,null0,open_bracket0,open_curly_brace0,open_paren0,plus0,print_constant0,read0,return0,semicolon0,string0,string_constant0,u,u.1,u.10,u.11,u.12,u.13,u.14,u.15,u.16,u.17,u.18,u.19,u.2,u.20,u.21,u.22,u.23,u.24,u.25,u.26,u.27,u.28,u.29,u.3,u.30,u.31,u.32,u.33,u.34,u.35,u.4,u.5,u.6,u.7,u.8,u.9\",\"%\"]": [
+      "modulo1"
     ],
     "[\"ident1\",\"A\"]": [
       "ident1"
@@ -2209,17 +2209,332 @@
     "[\"float_constant1,int_constant1\",\".\"]": [
       "float_constant2"
     ],
+    "[\"string_constant1\",\"A\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"B\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"C\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"D\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"E\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"F\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"G\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"H\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"I\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"J\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"K\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"L\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"M\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"N\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"O\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"P\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"Q\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"R\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"S\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"T\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"U\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"V\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"W\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"X\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"Y\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"Z\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"a\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"b\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"c\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"d\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"e\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"f\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"g\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"h\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"i\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"j\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"k\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"l\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"m\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"n\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"o\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"p\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"q\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"r\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"s\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"t\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"u\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"v\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"w\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"x\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"y\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"z\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"0\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"1\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"2\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"3\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"4\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"5\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"6\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"7\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"8\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"9\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\".\"]": [
+      "string_constant1"
+    ],
     "[\"string_constant1\",\"\\\"\"]": [
       "string_constant2"
     ],
-    "[\"string_constant1\",\"#any\"]": [
+    "[\"string_constant1\",\"?\"]": [
       "string_constant1"
     ],
-    "[\"equal1,equals1\",\"=\"]": [
-      "equals2"
+    "[\"string_constant1\",\"!\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"#\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"@\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"&\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"*\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\")\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"(\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"-\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"_\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"=\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"+\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"/\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\":\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\";\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\",\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"<\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\">\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"[\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"]\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"{\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"}\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"'\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"%\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"^\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"~\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"`\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ç\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ã\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ẽ\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ĩ\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"õ\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ũ\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"â\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ê\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"î\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ô\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"û\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"á\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"é\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"í\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ó\"]": [
+      "string_constant1"
+    ],
+    "[\"string_constant1\",\"ú\"]": [
+      "string_constant1"
     ],
     "[\"not_equals1\",\"=\"]": [
       "not_equals2"
+    ],
+    "[\"equal1,equals1\",\"=\"]": [
+      "equals2"
     ],
     "[\"less_than1,less_than_or_equal1\",\"=\"]": [
       "less_than_or_equal2"
