@@ -122,6 +122,8 @@ public class LexicalAnalyzerTest {
                 new Token(TokenEnum.IDENT, "a", 1, 14),
                 new Token(TokenEnum.COMMA, ",", 1, 15),
                 new Token(TokenEnum.INT, "int", 1, 17),
+                new Token(TokenEnum.IDENT, "b", 1, 21),
+                new Token(TokenEnum.CLOSE_PAREN, ")", 1, 22),
                 new Token(TokenEnum.OPEN_CURLY_BRACE, "{", 1, 24),
                 new Token(TokenEnum.INT, "int", 2, 5),
                 new Token(TokenEnum.IDENT, "resultado", 2, 9),
