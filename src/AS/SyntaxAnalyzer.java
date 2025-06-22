@@ -3,6 +3,7 @@ package AS;
 import Lexical.Token;
 import Lexical.TokenEnum;
 import AST.*;
+import AST.ExpressionTreeBuilder;
 import Syntax.SyntaxException;
 import Symbols.NonterminalEnum;
 
@@ -185,22 +186,7 @@ public class SyntaxAnalyzer {
         if (exprTokens.isEmpty()) {
             return new VarNode("");
         }
-        if (exprTokens.size() == 1) {
-            Token tok = exprTokens.get(0);
-            if (tok.type() == TokenEnum.INT_CONSTANT) {
-                return new IntLiteralNode(tok.value());
-            } else if (tok.type() == TokenEnum.STRING_CONSTANT) {
-                return new StringLiteralNode(tok.value());
-            }
-            return new VarNode(tok.value());
-        }
-        if (exprTokens.size() == 3) {
-            ExpressionNode left = parseExpression(List.of(exprTokens.get(0)));
-            String op = exprTokens.get(1).value();
-            ExpressionNode right = parseExpression(List.of(exprTokens.get(2)));
-            return new BinaryOpNode(left, op, right);
-        }
-        return new VarNode(exprTokens.getFirst().value());
+        return ExpressionTreeBuilder.build(exprTokens);
     }
 
 

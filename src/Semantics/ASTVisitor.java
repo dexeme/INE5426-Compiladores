@@ -11,6 +11,7 @@ public interface ASTVisitor<T> {
     T visit(VarNode node);
     T visit(IntLiteralNode node);
     T visit(StringLiteralNode node);
+    T visit(FloatLiteralNode node);
     T visit(PrintNode node);
     T visit(ReadNode node);
     T visit(ReturnNode node);

@@ -60,6 +60,11 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
     }
 
     @Override
+    public T visit(FloatLiteralNode node) {
+        return defaultValue;
+    }
+
+    @Override
     public T visit(PrintNode node) {
         node.getExpression().accept(this);
         return defaultValue;

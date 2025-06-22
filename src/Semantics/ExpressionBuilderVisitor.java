@@ -118,6 +118,11 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     }
 
     @Override
+    public Type visit(FloatLiteralNode node) {
+        return Type.FLOAT;
+    }
+
+    @Override
     public Type visit(PrintNode node) {
         node.getExpression().accept(this);
         return Type.VOID;
