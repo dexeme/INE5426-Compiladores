@@ -1,9 +1,8 @@
 package AS;
 
-import AL.Token;
-import AL.TokenEnum;
+import Lexical.Token;
+import Lexical.TokenEnum;
 import AST.*;
-import Constants.Messages;
 import Syntax.SyntaxException;
 import Symbols.NonterminalEnum;
 
@@ -18,17 +17,35 @@ public class SyntaxAnalyzer {
         this.tokens = new ArrayList<>(tokens);
     }
 
-    /** Parse the entire program and return the AST root. */
+    /**
+     * Parse the entire program and return the AST root.
+     */
     public ProgramNode parse() {
         List<FunctionNode> funcs = new ArrayList<>();
-        if (match(TokenEnum.DEF)) {
+
+        if (!check(TokenEnum.DEF)) {
+            if (!isAtEnd()) {
+                recordError(new SyntaxException(NonterminalEnum.PROGRAM, peek()));
+                // consume remaining tokens to avoid infinite loop
+                while (!isAtEnd()) advance();
+            }
+            return new ProgramNode(funcs);
+        }
+
+        while (match(TokenEnum.DEF)) {
             String name = consume(TokenEnum.IDENT, NonterminalEnum.FUNCDEF).value();
             consume(TokenEnum.OPEN_PAREN, NonterminalEnum.FUNCDEF);
-            List<String> params = new ArrayList<>();
+            List<Parameter> params = new ArrayList<>();
             if (!check(TokenEnum.CLOSE_PAREN)) {
                 do {
-                    consume(TokenEnum.INT, NonterminalEnum.PARAMLIST);
-                    params.add(consume(TokenEnum.IDENT, NonterminalEnum.PARAMLIST).value());
+                    Token typeTok;
+                    if (match(TokenEnum.INT) || match(TokenEnum.FLOAT) || match(TokenEnum.STRING)) {
+                        typeTok = previous();
+                    } else {
+                        typeTok = consume(TokenEnum.INT, NonterminalEnum.PARAMLIST);
+                    }
+                    String nameTok = consume(TokenEnum.IDENT, NonterminalEnum.PARAMLIST).value();
+                    params.add(new Parameter(typeTok.value(), nameTok));
                 } while (match(TokenEnum.COMMA));
             }
             consume(TokenEnum.CLOSE_PAREN, NonterminalEnum.FUNCDEF);
@@ -43,8 +60,16 @@ public class SyntaxAnalyzer {
             match(TokenEnum.CLOSE_CURLY_BRACE); // optional function block end
             funcs.add(new FunctionNode(name, params, body));
         }
+
+        if (!isAtEnd()) {
+            recordError(new SyntaxException(NonterminalEnum.PROGRAM, peek()));
+            while (!isAtEnd()) advance();
+        }
+
         return new ProgramNode(funcs);
     }
+
+
 
     public List<SyntaxException> getErrors() {
         return new ArrayList<>(errors);

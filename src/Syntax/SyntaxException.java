@@ -1,6 +1,6 @@
 package Syntax;
 
-import AL.Token;
+import Lexical.Token;
 import Symbols.NonterminalEnum;
 
 /**

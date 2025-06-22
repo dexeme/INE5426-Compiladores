@@ -13,6 +13,9 @@ public class AssignmentNode implements StatementNode {
     public ExpressionNode getExpression() { return expression; }
 
     @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
+
+    @Override
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder(indent).append("Assignment ").append(name).append("\n");
         sb.append(expression.toTree(indent + "  "));

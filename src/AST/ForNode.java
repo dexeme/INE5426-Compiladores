@@ -15,6 +15,14 @@ public class ForNode implements StatementNode {
         this.body = body;
     }
 
+    public StatementNode getInit() { return init; }
+    public ExpressionNode getCondition() { return condition; }
+    public StatementNode getIncrement() { return increment; }
+    public List<StatementNode> getBody() { return body; }
+
+    @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
+
     @Override
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder(indent).append("For\n");

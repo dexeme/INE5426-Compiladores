@@ -183,3 +183,27 @@ tokens são lidos.
 - O retorno do método parse(), (que é o nó Program), é a AST, e pra exibir a árvore, basta chamar o método
 toTree()
 - A AST é exibida no console, e pode ser visualizada como uma árvore.
+
+----- ANÁLISE SEMÂNTICA -----
+
+Aqui começa a parte de Semântica. Até agora fiz o básico pra ter
+um analisador funcional:
+
+- Adicionado um "visitor" genérico que percorre a árvore inteira.
+  Ele tem métodos pra cada tipo de nó, então quem quiser implementar
+  alguma SDD só herda dessa classe e sobrescreve o que for preciso.
+- Em cima disso veio o `ExpressionBuilderVisitor`, que de fato faz as
+  verificações: controla a tabela de símbolos, vê se a variável já foi
+  declarada no escopo e confere o tipo das expressões.
+- A tabela de símbolos agora guarda o tipo junto com o nome e o nível
+  de escopo, então dá pra pegar variáveis de escopos superiores sem
+  misturar as coisas.
+- Criado um contador de loops pra garantir que `break` só
+  aparece dentro de um `for` ou `while`.
+- Todas as mensagens de erro ficaram centralizadas no arquivo
+  `Messages`, assim os erros léxicos, sintáticos e semânticos seguem o
+  mesmo padrão.
+
+Os testes de semântica checam coisas como declaração duplicada,
+variável não declarada, tipo errado em expressão e uso ilegal de
+`break`.

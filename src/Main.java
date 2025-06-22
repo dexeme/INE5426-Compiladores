@@ -1,10 +1,11 @@
-import AL.Automaton;
-import AL.AutomatonReader;
-import AL.Token;
+import Lexical.Automaton;
+import Lexical.AutomatonReader;
+import Lexical.Token;
 import AL.LexicalAnalyzer;
 import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
+import Semantics.SemanticAnalyzer;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/fatorial.txt";
+            String inputFilePath = "resources/instances/semanticErrorBreakWithNoScope.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -49,6 +50,14 @@ public class Main {
             System.out.println(Messages.NO_SYNTAX_ERRORS);
             System.out.println(Messages.AST_HEADER);
             System.out.println(ast.toTree());
+            SemanticAnalyzer sem = new SemanticAnalyzer();
+            sem.analyze(ast);
+            if (!sem.getErrors().isEmpty()) {
+                System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + sem.getErrors().size());
+                for (var e : sem.getErrors()) System.out.println(e.getMessage());
+            } else {
+                System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + 0);
+            }
         }
     }
 }

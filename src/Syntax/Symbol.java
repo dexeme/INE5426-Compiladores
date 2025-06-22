@@ -1,7 +1,7 @@
 package Syntax;
 
-import AL.Token;
-import AL.TokenEnum;
+import Lexical.Token;
+import Lexical.TokenEnum;
 
 public class Symbol {
     private final String name;

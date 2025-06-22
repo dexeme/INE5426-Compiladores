@@ -1,7 +1,8 @@
 package AL;
 
+import Lexical.*;
 import Symbols.SymbolTable;
-import Constants.Messages;
+
 import java.util.*;
 
 public class LexicalAnalyzer {

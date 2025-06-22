@@ -1,6 +1,6 @@
 package Syntax;
 
-import AL.TokenEnum;
+import Lexical.TokenEnum;
 import Symbols.NonterminalEnum;
 import Symbols.ProductionEnum;
 

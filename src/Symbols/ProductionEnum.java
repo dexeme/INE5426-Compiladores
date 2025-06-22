@@ -1,6 +1,6 @@
 package Symbols;
 
-import AL.TokenEnum;
+import Lexical.TokenEnum;
 
 import java.util.List;
 

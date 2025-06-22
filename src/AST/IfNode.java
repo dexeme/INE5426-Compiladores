@@ -14,6 +14,11 @@ public class IfNode implements StatementNode {
     }
 
     public ExpressionNode getCondition() { return condition; }
+    public List<StatementNode> getThenBranch() { return thenBranch; }
+    public List<StatementNode> getElseBranch() { return elseBranch; }
+
+    @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
 
     @Override
     public String toTree(String indent) {

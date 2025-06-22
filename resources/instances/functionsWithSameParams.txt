@@ -1,0 +1,9 @@
+def main (int a, int b) {
+    print a;
+    }
+
+def funcao (int a, int b) {
+    if (a > b) {
+        print a;
+    }
+}

@@ -14,6 +14,12 @@ public class Messages {
     public static final String AST_HEADER = "AST:";
     public static final String NO_SYNTAX_ERRORS = "No syntax errors found!";
 
+    public static final String TOTAL_SEMANTIC_ERRORS = "Total semantic errors: ";
+    public static final String ERROR_DUPLICATE_DECL = "Duplicate declaration";
+    public static final String ERROR_UNDECLARED_VAR = "Undeclared variable";
+    public static final String ERROR_TYPE_MISMATCH = "Type mismatch";
+    public static final String ERROR_BREAK_OUTSIDE = "'break' used outside of loop";
+
     private Messages() {
     }
 }

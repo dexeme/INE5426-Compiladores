@@ -1,5 +1,7 @@
 package Symbols;
 
-import AL.Token;
+import Lexical.Token;
+import Semantics.Type;
 
-public record SymbolEntry(Token token, int scope, SymbolEntry next) {}
+/** Entry of a symbol in the table. */
+public record SymbolEntry(Token token, Type type, int scope, SymbolEntry next) {}

@@ -9,6 +9,12 @@ public class VarDeclNode implements StatementNode {
         this.name = name;
     }
 
+    public String getType() { return type; }
+    public String getName() { return name; }
+
+    @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
+
     @Override
     public String toTree(String indent) {
         return indent + "VarDecl " + type + " " + name;

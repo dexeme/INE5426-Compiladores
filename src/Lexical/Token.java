@@ -1,4 +1,4 @@
-package AL;
+package Lexical;
 
 public record Token(TokenEnum type, String value, int line, int column) {
 

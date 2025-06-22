@@ -1,4 +1,4 @@
-package AL;
+package Lexical;
 
 /**
  * Exception thrown when the lexical analysis finds an error.

@@ -1,4 +1,4 @@
-package AL;
+package Lexical;
 
 import Symbols.Symboll;
 

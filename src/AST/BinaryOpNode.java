@@ -11,6 +11,13 @@ public class BinaryOpNode implements ExpressionNode {
         this.right = right;
     }
 
+    public ExpressionNode getLeft() { return left; }
+    public String getOperator() { return operator; }
+    public ExpressionNode getRight() { return right; }
+
+    @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
+
     @Override
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder(indent).append("BinaryOp ").append(operator).append("\n");

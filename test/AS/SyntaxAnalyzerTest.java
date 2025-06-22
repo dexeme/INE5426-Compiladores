@@ -3,6 +3,9 @@ package test.AS;
 import AL.*;
 import AST.ProgramNode;
 import AS.SyntaxAnalyzer;
+import Lexical.Automaton;
+import Lexical.AutomatonReader;
+import Lexical.Token;
 import Syntax.SyntaxException;
 import org.junit.Test;
 

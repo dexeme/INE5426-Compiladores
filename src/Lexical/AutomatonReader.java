@@ -1,4 +1,4 @@
-package AL;
+package Lexical;
 
 import java.util.*;
 import java.io.*;

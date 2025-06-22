@@ -14,6 +14,9 @@ public class ProgramNode implements ASTNode {
     }
 
     @Override
+    public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
+
+    @Override
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder(indent).append("Program\n");
         for (FunctionNode fn : functions) {

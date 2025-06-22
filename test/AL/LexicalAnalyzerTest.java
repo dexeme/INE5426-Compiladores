@@ -1,6 +1,7 @@
 package test.AL;
 
 import AL.*;
+import Lexical.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
