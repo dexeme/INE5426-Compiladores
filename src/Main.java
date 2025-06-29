@@ -20,7 +20,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/problematicCode3.txt";
+            String inputFilePath = "resources/instances/intermediateCode1.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
