@@ -6,6 +6,7 @@ import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
 import Semantics.SemanticAnalyzer;
+import CodeGeneration.IntermediateCodeGenerator;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/semanticErrorBreakWithNoScope.txt";
+            String inputFilePath = "resources/instances/problematicCode3.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -55,8 +56,19 @@ public class Main {
             if (!sem.getErrors().isEmpty()) {
                 System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + sem.getErrors().size());
                 for (var e : sem.getErrors()) System.out.println(e.getMessage());
-            } else {
+            }  else {
                 System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + 0);
+
+                IntermediateCodeGenerator icg = new IntermediateCodeGenerator();
+                List<String> intermediateCode = icg.generate(ast);
+
+                if (intermediateCode.isEmpty()) {
+                    return;
+                }
+                System.out.println("Generated Intermediate Code:");
+                for (String instruction : intermediateCode) {
+                    System.out.println(instruction);
+                }
             }
         }
     }
