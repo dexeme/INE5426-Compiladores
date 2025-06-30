@@ -19,4 +19,10 @@ public interface ASTVisitor<T> {
     T visit(ForNode node);
     T visit(BreakNode node);
     T visit(DummyNode node);
+    T visit(AllocExpressionNode node);
+    T visit(BlockNode node);
+    T visit(EmptyStatementNode node);
+    T visit(FunctionCallNode node);
+    T visit(NullNode node);
+    T visit(UnaryOpNode node);
 }

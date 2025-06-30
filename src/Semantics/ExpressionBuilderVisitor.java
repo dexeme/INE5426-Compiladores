@@ -39,7 +39,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     // ----- Visitor methods -----
     @Override
     public Type visit(ProgramNode node) {
-        for (FunctionNode fn : node.getFunctions()) fn.accept(this);
+        for (ASTNode fn : node.getFunctions()) fn.accept(this);
         return Type.VOID;
     }
 
@@ -69,14 +69,14 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(AssignmentNode node) {
-        SymbolEntry entry = symbols.lookup(node.getName());
-        Token tok = new Token(TokenEnum.IDENT, node.getName(), 0, 0);
+        SymbolEntry entry = symbols.lookup(node.getLeft().getName());
+        Token tok = new Token(TokenEnum.IDENT, node.getLeft().getName(), 0, 0);
         if (entry == null) {
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, tok));
-            node.getExpression().accept(this); // still visit expression
+            node.getRight().accept(this); // still visit expression
             return Type.ERROR;
         }
-        Type exprT = node.getExpression().accept(this);
+        Type exprT = node.getRight().accept(this);
         if (entry.type() != null && exprT != Type.ERROR && entry.type() != exprT) {
             errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, tok));
         }
@@ -130,9 +130,9 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(ReadNode node) {
-        SymbolEntry entry = symbols.lookup(node.getName());
+        SymbolEntry entry = symbols.lookup(node.getVariable().getName());
         if (entry == null) {
-            Token tok = new Token(TokenEnum.IDENT, node.getName(), 0, 0);
+            Token tok = new Token(TokenEnum.IDENT, node.getVariable().getName(), 0, 0);
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, tok));
         }
         return Type.VOID;
@@ -140,7 +140,6 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(ReturnNode node) {
-        if (node.getExpression() != null) node.getExpression().accept(this);
         return Type.VOID;
     }
 
@@ -165,7 +164,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
         if (node.getInit() != null) node.getInit().accept(this);
         if (node.getCondition() != null) node.getCondition().accept(this);
         if (node.getIncrement() != null) node.getIncrement().accept(this);
-        for (StatementNode st : node.getBody()) st.accept(this);
+        if (node.getBody() != null) { node.getBody().accept(this); }
         loopDepth--;
         symbols.exitScope();
         return Type.VOID;

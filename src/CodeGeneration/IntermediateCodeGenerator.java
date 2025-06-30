@@ -65,7 +65,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(ProgramNode node) {
-        for (FunctionNode fn : node.getFunctions()) {
+        for (ASTNode fn : node.getFunctions()) {
             fn.accept(this);
         }
         return null;
@@ -100,9 +100,9 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(AssignmentNode node) {
-        String exprResult = node.getExpression().accept(this);
+        String exprResult = node.getRight().accept(this);
 
-        instructions.add(node.getName() + " = " + exprResult);
+        instructions.add(node.getLeft().getName() + " = " + exprResult);
         return null;
     }
 
@@ -146,7 +146,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(ReadNode node) {
-        instructions.add("READ " + node.getName());
+        instructions.add("READ " + node.getVariable().getName());
         return null;
     }
 
@@ -202,8 +202,8 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
         instructions.add("IF_FALSE " + conditionResult + " GOTO " + loopEndLabel);
 
-        for (StatementNode st : node.getBody()) {
-            st.accept(this);
+        if (node.getBody() != null) {
+            node.getBody().accept(this);
         }
 
         if (node.getIncrement() != null) {

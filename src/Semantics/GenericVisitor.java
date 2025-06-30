@@ -16,7 +16,7 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
 
     @Override
     public T visit(ProgramNode node) {
-        for (FunctionNode fn : node.getFunctions()) fn.accept(this);
+        for (ASTNode fn : node.getFunctions()) fn.accept(this);
         return defaultValue;
     }
 
@@ -33,7 +33,8 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
 
     @Override
     public T visit(AssignmentNode node) {
-        if (node.getExpression() != null) node.getExpression().accept(this);
+        node.getLeft().accept(this);
+        node.getRight().accept(this);
         return defaultValue;
     }
 
@@ -77,7 +78,6 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
 
     @Override
     public T visit(ReturnNode node) {
-        if (node.getExpression() != null) node.getExpression().accept(this);
         return defaultValue;
     }
 
@@ -96,7 +96,7 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
         if (node.getInit() != null) node.getInit().accept(this);
         if (node.getCondition() != null) node.getCondition().accept(this);
         if (node.getIncrement() != null) node.getIncrement().accept(this);
-        for (StatementNode st : node.getBody()) st.accept(this);
+        if (node.getBody() != null) node.getBody().accept(this);
         return defaultValue;
     }
 
@@ -107,6 +107,43 @@ public class GenericVisitor<T> implements ASTVisitor<T> {
 
     @Override
     public T visit(DummyNode node) {
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(AllocExpressionNode node) {
+        for (ExpressionNode dim : node.getDimensions()) {
+            dim.accept(this);
+        }
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(BlockNode node) {
+        for (StatementNode st : node.getNodes()) {
+            st.accept(this);
+        }
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(EmptyStatementNode node) {
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(FunctionCallNode node) {
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(NullNode node) {
+        return defaultValue;
+    }
+
+    @Override
+    public T visit(UnaryOpNode node) {
+        node.getExpressionNode().accept(this);
         return defaultValue;
     }
 }

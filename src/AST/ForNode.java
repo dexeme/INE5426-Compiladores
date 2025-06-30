@@ -6,9 +6,9 @@ public class ForNode implements StatementNode {
     private final StatementNode init;
     private final ExpressionNode condition;
     private final StatementNode increment;
-    private final List<StatementNode> body;
+    private final StatementNode body;
 
-    public ForNode(StatementNode init, ExpressionNode condition, StatementNode increment, List<StatementNode> body) {
+    public ForNode(StatementNode init, ExpressionNode condition, StatementNode increment, StatementNode body) {
         this.init = init;
         this.condition = condition;
         this.increment = increment;
@@ -18,21 +18,19 @@ public class ForNode implements StatementNode {
     public StatementNode getInit() { return init; }
     public ExpressionNode getCondition() { return condition; }
     public StatementNode getIncrement() { return increment; }
-    public List<StatementNode> getBody() { return body; }
+    public StatementNode getBody() { return body; }
 
     @Override
     public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
 
     @Override
     public String toTree(String indent) {
-        StringBuilder sb = new StringBuilder(indent).append("For\n");
-        sb.append(init.toTree(indent + "  ")).append("\n");
-        sb.append(condition.toTree(indent + "  ")).append("\n");
-        sb.append(increment.toTree(indent + "  ")).append("\n");
-        for (int i = 0; i < body.size(); i++) {
-            sb.append(body.get(i).toTree(indent + "  "));
-            if (i < body.size() - 1) sb.append("\n");
-        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(indent).append("ForNode\n");
+        sb.append(indent).append("  Init:\n").append(init.toTree(indent + "    "));
+        sb.append(indent).append("  Condition:\n").append(condition.toTree(indent + "    "));
+        sb.append(indent).append("  Increment:\n").append(increment.toTree(indent + "    "));
+        sb.append(indent).append("  Body:\n").append(body.toTree(indent + "    "));
         return sb.toString();
     }
 }

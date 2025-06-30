@@ -56,7 +56,7 @@ public class GraphvizVisualizer {
         @Override
         public String visit(ProgramNode node) {
             String id = newNode("Program");
-            for (FunctionNode fn : node.getFunctions()) {
+            for (ASTNode fn : node.getFunctions()) {
                 String cid = fn.accept(this);
                 edge(id, cid);
             }
@@ -84,9 +84,9 @@ public class GraphvizVisualizer {
 
         @Override
         public String visit(AssignmentNode node) {
-            String id = newNode("Assign\n" + node.getName());
-            if (node.getExpression() != null) {
-                String expr = node.getExpression().accept(this);
+            String id = newNode("Assign\n" + node.getLeft().getName());
+            if (node.getRight() != null) {
+                String expr = node.getRight().accept(this);
                 edge(id, expr);
             }
             return id;
@@ -132,16 +132,12 @@ public class GraphvizVisualizer {
 
         @Override
         public String visit(ReadNode node) {
-            return newNode("Read\n" + node.getName());
+            return newNode("Read\n" + node.getVariable().getName());
         }
 
         @Override
         public String visit(ReturnNode node) {
             String id = newNode("Return");
-            if (node.getExpression() != null) {
-                String expr = node.getExpression().accept(this);
-                edge(id, expr);
-            }
             return id;
         }
 
@@ -182,8 +178,8 @@ public class GraphvizVisualizer {
                 String incr = node.getIncrement().accept(this);
                 edge(id, incr);
             }
-            for (StatementNode st : node.getBody()) {
-                String body = st.accept(this);
+            if (node.getBody() != null) {
+                String body = node.getBody().accept(this);
                 edge(id, body);
             }
             return id;

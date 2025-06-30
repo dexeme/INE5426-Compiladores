@@ -1,17 +1,21 @@
 package AST;
 
 public class ReadNode implements StatementNode {
-    private final String name;
+    private final VarNode variable;
 
-    public ReadNode(String name) { this.name = name; }
+    public ReadNode(VarNode variable) {
+        this.variable = variable;
+    }
 
-    public String getName() { return name; }
+    public VarNode getVariable() {
+        return variable;
+    }
 
     @Override
     public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
 
     @Override
     public String toTree(String indent) {
-        return indent + "Read " + name;
+        return indent + "ReadNode\n" + variable.toTree(indent + "  ");
     }
 }

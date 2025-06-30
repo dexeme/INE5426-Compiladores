@@ -5,12 +5,14 @@ import AL.LexicalAnalyzer;
 import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
+import Syntax.SyntaxException;
 import Semantics.SemanticAnalyzer;
 import CodeGeneration.IntermediateCodeGenerator;
 
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
         String automatonFilePath = "resources/automaton.json";
 
@@ -20,7 +22,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/intermediateCode1.txt";
+            String inputFilePath = "resources/instances/simpleCode1.txt";
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -44,32 +46,37 @@ public class Main {
         }
 
         SyntaxAnalyzer syntax = new SyntaxAnalyzer(tokens);
-        ProgramNode ast = syntax.parse();
-        if (!syntax.getErrors().isEmpty()) {
-            System.out.println(Messages.TOTAL_SYNTAX_ERRORS + syntax.getErrors().size());
-        } else {
-            System.out.println(Messages.NO_SYNTAX_ERRORS);
-            System.out.println(Messages.AST_HEADER);
-            System.out.println(ast.toTree());
-            SemanticAnalyzer sem = new SemanticAnalyzer();
-            sem.analyze(ast);
-            if (!sem.getErrors().isEmpty()) {
-                System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + sem.getErrors().size());
-                for (var e : sem.getErrors()) System.out.println(e.getMessage());
-            }  else {
-                System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + 0);
+        ProgramNode ast;
+        try {
+            ast = syntax.parse();
+        } catch (SyntaxException e) {
+            System.out.println("Syntax error: \n" + e.getMessage());
+            return;
+        }
+        System.out.println();
+        System.out.println(Messages.NO_SYNTAX_ERRORS);
+        System.out.println(Messages.AST_HEADER);
+        System.out.println(ast.toTree());
 
-                IntermediateCodeGenerator icg = new IntermediateCodeGenerator();
-                List<String> intermediateCode = icg.generate(ast);
+        SemanticAnalyzer sem = new SemanticAnalyzer();
+        sem.analyze(ast);
+        if (!sem.getErrors().isEmpty()) {
+            System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + sem.getErrors().size());
+            for (var e : sem.getErrors()) System.out.println(e.getMessage());
+        }  else {
+            System.out.println(Messages.TOTAL_SEMANTIC_ERRORS + 0);
 
-                if (intermediateCode.isEmpty()) {
-                    return;
-                }
-                System.out.println("Generated Intermediate Code:");
-                for (String instruction : intermediateCode) {
-                    System.out.println(instruction);
-                }
+            IntermediateCodeGenerator icg = new IntermediateCodeGenerator();
+            List<String> intermediateCode = icg.generate(ast);
+
+            if (intermediateCode.isEmpty()) {
+                return;
+            }
+            System.out.println("Generated Intermediate Code:");
+            for (String instruction : intermediateCode) {
+                System.out.println(instruction);
             }
         }
     }
+
 }

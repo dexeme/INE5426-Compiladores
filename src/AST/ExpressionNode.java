@@ -1,4 +1,4 @@
 package AST;
 
-public interface ExpressionNode extends ASTNode {
+public interface ExpressionNode extends AssignableNode {
 }

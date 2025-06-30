@@ -3,14 +3,14 @@ package AST;
 import java.util.List;
 
 public class ProgramNode implements ASTNode {
-    private final List<FunctionNode> functions;
+    private final List<ASTNode> nodes;
 
-    public ProgramNode(List<FunctionNode> functions) {
-        this.functions = functions;
+    public ProgramNode(List<ASTNode> nodes) {
+        this.nodes = nodes;
     }
 
-    public List<FunctionNode> getFunctions() {
-        return functions;
+    public List<ASTNode> getFunctions() {
+        return nodes;
     }
 
     @Override
@@ -18,11 +18,10 @@ public class ProgramNode implements ASTNode {
 
     @Override
     public String toTree(String indent) {
-        StringBuilder sb = new StringBuilder(indent).append("Program\n");
-        for (FunctionNode fn : functions) {
-            sb.append(fn.toTree(indent + "  ")).append("\n");
+        StringBuilder sb = new StringBuilder(indent + "Program\n");
+        for (ASTNode node : nodes) {
+            sb.append(node.toTree(indent + "  ")).append("\n");
         }
-        if (!functions.isEmpty()) sb.setLength(sb.length() - 1); // remove last newline
         return sb.toString();
     }
 }
