@@ -1,0 +1,17 @@
+def add(int a, int b) {
+    int sum;
+    sum = a + b;
+    return sum;
+}
+
+def main() {
+    int a;
+    int b;
+    int result;
+
+    a = 1;
+    b = 1;
+
+    result = add(a , b);
+    print result;
+}
