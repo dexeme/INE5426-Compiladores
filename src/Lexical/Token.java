@@ -8,6 +8,6 @@ public record Token(TokenEnum type, String value, int line, int column) {
 
     @Override
     public String toString() {
-        return type + ", \"" + value + "\", " + line + ", " + column;
+        return String.format("%-12s '%s' (line %d, col %d)", type, value, line, column);
     }
 }

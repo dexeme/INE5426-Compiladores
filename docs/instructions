@@ -207,3 +207,9 @@ um analisador funcional:
 Os testes de semântica checam coisas como declaração duplicada,
 variável não declarada, tipo errado em expressão e uso ilegal de
 `break`.
+
+----- PARTE GRÁFICA -----
+
+Foi adicionada a classe `GraphvizVisualizer`, que percorre a AST e gera um arquivo
+`.dot` para o Graphviz. A ferramenta cria uma imagem da árvore e a abre
+automaticamente quando o programa é executado com a flag `showTree` == true (arquivo main)

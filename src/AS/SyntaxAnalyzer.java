@@ -78,7 +78,6 @@ public class SyntaxAnalyzer {
 
     private void recordError(SyntaxException e) {
         errors.add(e);
-        System.out.println(e.getMessage());
     }
 
     private StatementNode parseStatement() {

@@ -123,7 +123,6 @@ public class LexicalAnalyzer {
 
     private void recordError(LexicalException e) {
         errors.add(e);
-        System.out.println(e.getMessage());
     }
 
     private TokenEnum classifyToken(String lexeme, String finalState, int line, int column) {
