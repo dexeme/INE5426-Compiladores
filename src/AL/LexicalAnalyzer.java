@@ -39,19 +39,16 @@ public class LexicalAnalyzer {
                 char first = line.charAt(position);
                 if (first == ';') {
                     Token tok = new Token(TokenEnum.SEMICOLON, ";", lineNumber, column);
-                    symbolTable.add(tok);
                     tokens.add(tok);
                     position++;
                     continue;
                 } else if (first == '[') {
                     Token tok = new Token(TokenEnum.OPEN_BRACKET, "[", lineNumber, column);
-                    symbolTable.add(tok);
                     tokens.add(tok);
                     position++;
                     continue;
                 } else if (first == ']') {
                     Token tok = new Token(TokenEnum.CLOSE_BRACKET, "]", lineNumber, column);
-                    symbolTable.add(tok);
                     tokens.add(tok);
                     position++;
                     continue;
@@ -67,7 +64,6 @@ public class LexicalAnalyzer {
                         position++;
                         String lex = "\"" + sb + "\"";
                         Token tok = new Token(TokenEnum.STRING_CONSTANT, lex, lineNumber, startCol);
-                        symbolTable.add(tok);
                         tokens.add(tok);
                     } else {
                         recordError(new LexicalException(LexicalErrorType.INVALID_TOKEN, sb.toString(), lineNumber, startCol));
@@ -107,7 +103,9 @@ public class LexicalAnalyzer {
                         try {
                             TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
                             Token lex = new Token(type, lexemeStr, lineNumber, column);
-                            symbolTable.add(lex);
+                            if (type == TokenEnum.IDENT) {
+                                symbolTable.add(lex);
+                            }
                             tokens.add(lex);
                         } catch (LexicalException e) {
                             recordError(e);

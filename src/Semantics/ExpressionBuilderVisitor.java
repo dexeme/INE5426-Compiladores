@@ -178,4 +178,14 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     public Type visit(DummyNode node) {
         return Type.VOID;
     }
+
+    @Override
+    public Type visit(BlockNode node) {
+        symbols.enterScope();
+        for (StatementNode st : node.getNodes()) {
+            st.accept(this);
+        }
+        symbols.exitScope();
+        return Type.VOID;
+    }
 }

@@ -37,10 +37,9 @@ public class Main {
         }
 
         List<Token> tokens = lexicalAnalyzer.analyzeCode(sourceCode);
+
         System.out.println(Messages.SYMBOL_TABLE_HEADER);
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        System.out.println(lexicalAnalyzer.getSymbolTable().toString());
 
         if (!lexicalAnalyzer.getErrors().isEmpty()) {
             System.out.println(Messages.TOTAL_LEXICAL_ERRORS + lexicalAnalyzer.getErrors().size());
