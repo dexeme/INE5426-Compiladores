@@ -1,0 +1,46 @@
+def main(){
+    int integer0D;
+    int integer1D[10];
+    int integer2D[10][20];
+    int integer3D[10][20][30];
+
+    float float0D;
+    float float1D[10];
+    float float2D[10][20];
+    float float3D[10][20][30];
+
+    string string0D;
+    string string1D[10];
+    string string2D[10][20];
+    string string3D[10][20][30];
+
+    integer1D = new int[10];
+    integer2D = new int[10][20];
+    integer3D = new int[10][20][30];
+
+    float1D = new float[10];
+    float2D = new float[10][20];
+    float3D = new float[10][20][30];
+
+    string1D = new string[10];
+    string2D = new string[10][20];
+    string3D = new string[10][20][30];
+
+    integer0D = 5;
+    integer1D[0] = 10;
+    integer2D[0][0] = 15;
+    integer3D[0][0][0] = 20;
+    integer3D[2 * 2][integer0D + 29][1] = 25;
+
+    float0D = 1.5;
+    float1D[0] = 2.5;
+    float2D[0][0] = 3.5;
+    float3D[0][0][0] = 4.5;
+    float3D[2 * 2][integer0D + 29][1] = 5.5;
+
+    string0D = "Hello";
+    string1D[0] = "World";
+    string2D[0][0] = "Test";
+    string3D[0][0][0] = "Example";
+    string3D[2 * 2][integer0D + 29][1] = "String";
+}

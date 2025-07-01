@@ -20,9 +20,10 @@ public class VarNode implements ExpressionNode {
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder(indent + "VarNode " + name);
         if (!dimensions.isEmpty()) {
-            sb.append("\n");
+            sb.append("\n").append(indent).append("  Dimensions:");
             for (ExpressionNode dim : dimensions) {
-                sb.append(dim.toTree(indent + "  "));
+                sb.append("\n");
+                sb.append(dim.toTree(indent + "    "));
             }
         }
         return sb.toString();

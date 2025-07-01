@@ -27,9 +27,9 @@ public class ForNode implements StatementNode {
     public String toTree(String indent) {
         StringBuilder sb = new StringBuilder();
         sb.append(indent).append("ForNode\n");
-        sb.append(indent).append("  Init:\n").append(init.toTree(indent + "    "));
-        sb.append(indent).append("  Condition:\n").append(condition.toTree(indent + "    "));
-        sb.append(indent).append("  Increment:\n").append(increment.toTree(indent + "    "));
+        sb.append(indent).append("  Init:\n").append(init.toTree(indent + "    ")).append("\n");
+        sb.append(indent).append("  Condition:\n").append(condition.toTree(indent + "    ")).append("\n");
+        sb.append(indent).append("  Increment:\n").append(increment.toTree(indent + "    ")).append("\n");
         sb.append(indent).append("  Body:\n").append(body.toTree(indent + "    "));
         return sb.toString();
     }

@@ -1,3 +1,4 @@
+import AST.TreeVisualizer;
 import Lexical.Automaton;
 import Lexical.AutomatonReader;
 import Lexical.Token;
@@ -57,6 +58,7 @@ public class Main {
         System.out.println(Messages.NO_SYNTAX_ERRORS);
         System.out.println(Messages.AST_HEADER);
         System.out.println(ast.toTree());
+//        TreeVisualizer.generateTreeImage(ast.toTree(), false);
 
         SemanticAnalyzer sem = new SemanticAnalyzer();
         sem.analyze(ast);
