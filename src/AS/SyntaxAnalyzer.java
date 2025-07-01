@@ -64,7 +64,7 @@ public class SyntaxAnalyzer {
             if (lookahead.type() != TokenEnum.IDENT) {
                 throw new SyntaxException("Expected function name after 'def'", lookahead);
             }
-            String funcName = lookahead.value();
+            Token functionIdentifier = lookahead;
             match(TokenEnum.IDENT);
             match(TokenEnum.OPEN_PAREN);
             List<Parameter> params = parseParamList();
@@ -72,7 +72,7 @@ public class SyntaxAnalyzer {
             match(TokenEnum.OPEN_CURLY_BRACE);
             List<StatementNode> statements = parseStatementList();
             match(TokenEnum.CLOSE_CURLY_BRACE);
-            functions.add(new FunctionNode(funcName, params, statements));
+            functions.add(new FunctionNode(functionIdentifier, params, statements));
         }
         return functions;
     }
@@ -158,11 +158,11 @@ public class SyntaxAnalyzer {
         if (lookahead.type() != TokenEnum.IDENT) {
             throw new SyntaxException("Expected variable name after type", lookahead);
         }
-        String varName = lookahead.value();
+        Token variableIdentifier = lookahead;
         match(TokenEnum.IDENT);
         List<Integer> dimensions = parseVarDim();
         match(TokenEnum.SEMICOLON);
-        return new VarDeclNode(type.name(), varName, dimensions);
+        return new VarDeclNode(type.name(), variableIdentifier, dimensions);
     }
 
     private List<Integer> parseVarDim() {
@@ -407,7 +407,7 @@ public class SyntaxAnalyzer {
         if (lookahead.type() != TokenEnum.IDENT) {
             throw new SyntaxException("Expected identifier for LValue", lookahead);
         }
-        String varName = lookahead.value();
+        Token variableIdentifier = lookahead;
         consume();
         List<ExpressionNode> dimensions = new ArrayList<>();
         while (lookahead.type() == TokenEnum.OPEN_BRACKET) {
@@ -419,7 +419,7 @@ public class SyntaxAnalyzer {
         switch (lookahead.type()) {
             case CLOSE_PAREN, SEMICOLON, CLOSE_BRACKET, EQUAL, PLUS, MINUS, MULTIPLY, DIVIDE, MODULO,
                  LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN_OR_EQUAL, EQUALS, NOT_EQUALS -> {
-                return new VarNode(varName, dimensions);
+                return new VarNode(variableIdentifier, dimensions);
 
             }
             default -> throw new SyntaxException("Unexpected token after LValue: " + lookahead.type(), lookahead);

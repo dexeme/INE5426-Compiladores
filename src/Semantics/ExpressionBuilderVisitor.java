@@ -27,7 +27,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     }
 
     private Type fromString(String t) {
-        return switch (t) {
+        return switch (t.toLowerCase()) {
             case "int" -> Type.INT;
             case "float" -> Type.FLOAT;
             case "string" -> Type.STRING;
@@ -57,28 +57,25 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(VarDeclNode node) {
-        if (symbols.existsInCurrentScope(node.getName())) {
-            Token tok = new Token(TokenEnum.IDENT, node.getName(), 0, 0);
-            errors.add(new SemanticException(Messages.ERROR_DUPLICATE_DECL, tok));
+        if (symbols.existsInCurrentScope(node.getVariableIdentifier().value())) {
+            errors.add(new SemanticException(Messages.ERROR_DUPLICATE_DECL, node.getVariableIdentifier()));
         } else {
-            Token tok = new Token(TokenEnum.IDENT, node.getName(), 0, 0);
-            symbols.add(tok, fromString(node.getType()));
+            symbols.add(node.getVariableIdentifier(), fromString(node.getType()));
         }
         return Type.VOID;
     }
 
     @Override
     public Type visit(AssignmentNode node) {
-        SymbolEntry entry = symbols.lookup(node.getLeft().getName());
-        Token tok = new Token(TokenEnum.IDENT, node.getLeft().getName(), 0, 0);
+        SymbolEntry entry = symbols.lookup(node.getLeft().getVariableIdentifier().value());
         if (entry == null) {
-            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, tok));
+            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getLeft().getVariableIdentifier()));
             node.getRight().accept(this); // still visit expression
             return Type.ERROR;
         }
         Type exprT = node.getRight().accept(this);
         if (entry.type() != null && exprT != Type.ERROR && entry.type() != exprT) {
-            errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, tok));
+            errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, node.getLeft().getVariableIdentifier()));
         }
         return entry.type();
     }
@@ -98,10 +95,9 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(VarNode node) {
-        SymbolEntry entry = symbols.lookup(node.getName());
-        Token tok = new Token(TokenEnum.IDENT, node.getName(), 0, 0);
+        SymbolEntry entry = symbols.lookup(node.getVariableIdentifier().value());
         if (entry == null) {
-            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, tok));
+            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getVariableIdentifier()));
             return Type.ERROR;
         }
         return entry.type() == null ? Type.UNKNOWN : entry.type();
@@ -130,10 +126,9 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(ReadNode node) {
-        SymbolEntry entry = symbols.lookup(node.getVariable().getName());
+        SymbolEntry entry = symbols.lookup(node.getVariable().getVariableIdentifier().value());
         if (entry == null) {
-            Token tok = new Token(TokenEnum.IDENT, node.getVariable().getName(), 0, 0);
-            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, tok));
+            errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getVariable().getVariableIdentifier()));
         }
         return Type.VOID;
     }

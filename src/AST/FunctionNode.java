@@ -1,19 +1,21 @@
 package AST;
 
+import Lexical.Token;
+
 import java.util.List;
 
 public class FunctionNode implements ASTNode {
-    private final String name;
+    private final Token functionIdentifier;
     private final List<Parameter> parameters;
     private final List<StatementNode> body;
 
-    public FunctionNode(String name, List<Parameter> parameters, List<StatementNode> body) {
-        this.name = name;
+    public FunctionNode(Token functionIdentifier, List<Parameter> parameters, List<StatementNode> body) {
+        this.functionIdentifier = functionIdentifier;
         this.parameters = parameters;
         this.body = body;
     }
 
-    public String getName() { return name; }
+    public Token getFunctionIdentifier() { return functionIdentifier; }
     public List<Parameter> getParameters() { return parameters; }
     public List<StatementNode> getBody() { return body; }
 
@@ -22,7 +24,7 @@ public class FunctionNode implements ASTNode {
 
     @Override
     public String toTree(String indent) {
-        StringBuilder sb = new StringBuilder(indent).append("Function ").append(name);
+        StringBuilder sb = new StringBuilder(indent).append("Function ").append(functionIdentifier.value());
         if (!parameters.isEmpty()) {
             sb.append("(");
             for (int i = 0; i < parameters.size(); i++) {

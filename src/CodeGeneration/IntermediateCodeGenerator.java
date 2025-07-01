@@ -73,7 +73,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(FunctionNode node) {
-        instructions.add("FUNC " + node.getName() + ":");
+        instructions.add("FUNC " + node.getFunctionIdentifier().value() + ":");
 
         for (StatementNode st : node.getBody()) {
             st.accept(this);
@@ -102,13 +102,13 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     public String visit(AssignmentNode node) {
         String exprResult = node.getRight().accept(this);
 
-        instructions.add(node.getLeft().getName() + " = " + exprResult);
+        instructions.add(node.getLeft().getVariableIdentifier().value() + " = " + exprResult);
         return null;
     }
 
     @Override
     public String visit(VarNode node) {
-        return node.getName();
+        return node.getVariableIdentifier().value();
     }
 
     @Override
@@ -146,7 +146,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(ReadNode node) {
-        instructions.add("READ " + node.getVariable().getName());
+        instructions.add("READ " + node.getVariable().getVariableIdentifier().value());
         return null;
     }
 
