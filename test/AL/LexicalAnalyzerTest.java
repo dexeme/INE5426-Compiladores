@@ -172,4 +172,34 @@ public class LexicalAnalyzerTest {
                 assertFalse(analyzer.getErrors().isEmpty());
                 assertEquals(LexicalErrorType.INVALID_TOKEN, analyzer.getErrors().getFirst().getType());
             }
+
+            @Test
+            public void testBracketDeclaration() {
+                List<Token> tokens = analyze(
+                        "def main() {",
+                        "    x = int[10];",
+                        "}"
+            );
+            assertTrue(analyzer.getErrors().isEmpty());
+            List<Token> expected = Arrays.asList(
+                    new Token(TokenEnum.DEF, "def", 1, 1),
+                    new Token(TokenEnum.IDENT, "main", 1, 5),
+                    new Token(TokenEnum.OPEN_PAREN, "(", 1, 9),
+                    new Token(TokenEnum.CLOSE_PAREN, ")", 1, 10),
+                    new Token(TokenEnum.OPEN_CURLY_BRACE, "{", 1, 12),
+                    new Token(TokenEnum.IDENT, "x", 2, 5),
+                    new Token(TokenEnum.EQUAL, "=", 2, 7),
+                    new Token(TokenEnum.INT, "int", 2, 9),
+                    new Token(TokenEnum.OPEN_BRACKET, "[", 2, 12),
+                    new Token(TokenEnum.INT_CONSTANT, "10", 2, 13),
+                    new Token(TokenEnum.CLOSE_BRACKET, "]", 2, 15),
+                    new Token(TokenEnum.SEMICOLON, ";", 2, 16),
+                    new Token(TokenEnum.CLOSE_CURLY_BRACE, "}", 3, 1)
+            );
+
+            assertEquals(expected, tokens);
+
+
+
+    }
         }

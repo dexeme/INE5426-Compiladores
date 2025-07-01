@@ -43,6 +43,18 @@ public class LexicalAnalyzer {
                     tokens.add(tok);
                     position++;
                     continue;
+                } else if (first == '[') {
+                    Token tok = new Token(TokenEnum.OPEN_BRACKET, "[", lineNumber, column);
+                    symbolTable.add(tok);
+                    tokens.add(tok);
+                    position++;
+                    continue;
+                } else if (first == ']') {
+                    Token tok = new Token(TokenEnum.CLOSE_BRACKET, "]", lineNumber, column);
+                    symbolTable.add(tok);
+                    tokens.add(tok);
+                    position++;
+                    continue;
                 } else if (first == '"') {
                     int startCol = column;
                     StringBuilder sb = new StringBuilder();
