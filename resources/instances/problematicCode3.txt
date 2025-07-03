@@ -1,7 +1,7 @@
 def add(int a, int b) {
     int sum;
     sum = a + b;
-    return sum;
+    return;
 }
 
 def main() {
@@ -12,6 +12,6 @@ def main() {
     a = 1;
     b = 1;
 
-    result = add(a , b);
+    result = 123;
     print result;
 }

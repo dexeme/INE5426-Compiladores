@@ -17,7 +17,7 @@ public class VarDeclNode implements StatementNode {
 
     public String getType() { return type; }
     public Token getVariableIdentifier() { return variableIdentifier; }
-
+    public List<Integer> getDimensions() { return dimensions; }
     @Override
     public <T> T accept(Semantics.ASTVisitor<T> visitor) { return visitor.visit(this); }
 

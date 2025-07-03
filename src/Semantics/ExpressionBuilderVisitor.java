@@ -100,6 +100,9 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getVariableIdentifier()));
             return Type.ERROR;
         }
+        for(ExpressionNode dimExpr : node.getDimensions()) {
+            dimExpr.accept(this);
+        }
         return entry.type() == null ? Type.UNKNOWN : entry.type();
     }
 
@@ -123,6 +126,12 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
         node.getExpression().accept(this);
         return Type.VOID;
     }
+
+    @Override
+    public Type visit(NullNode node) {
+        return Type.VOID;
+    }
+
 
     @Override
     public Type visit(ReadNode node) {
@@ -187,5 +196,23 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
         }
         symbols.exitScope();
         return Type.VOID;
+    }
+
+    @Override
+    public Type visit(FunctionCallNode node) {
+        return Type.VOID;
+    }
+
+    @Override
+    public Type visit(UnaryOpNode node) {
+        return node.getExpressionNode().accept(this);
+    }
+
+    @Override
+    public Type visit(AllocExpressionNode node) {
+        for (ExpressionNode dim : node.getDimensions()) {
+            dim.accept(this);
+        }
+        return fromString(node.getType());
     }
 }

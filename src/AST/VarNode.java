@@ -13,6 +13,10 @@ public class VarNode implements ExpressionNode {
         this.dimensions = dimensions;
     }
 
+    public List<ExpressionNode> getDimensions() {
+        return dimensions;
+    }
+
     public Token getVariableIdentifier() {
         return variableIdentifier;
     }

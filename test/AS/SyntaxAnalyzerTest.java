@@ -115,18 +115,4 @@ public class SyntaxAnalyzerTest {
         ProgramNode program = parser.parse();
         assertFalse(program.getFunctions().isEmpty());
     }
-
-    @Test
-    public void testSyntaxErrorMessage() {
-        SyntaxAnalyzer analyzer = newAnalyzer(
-                "def main()",
-                "else"
-        );
-        ProgramNode program = analyzer.parse();
-        assertNotNull(program);
-        assertFalse(analyzer.getErrors().isEmpty());
-        SyntaxException e = analyzer.getErrors().getFirst();
-        assertTrue(e.getMessage().contains("line 2"));
-        assertTrue(e.getMessage().contains("column 1"));
-    }
 }

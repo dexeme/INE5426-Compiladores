@@ -9,11 +9,9 @@ import java.util.Stack;
 /** Visitor responsible for generating Intermediate Code from the given Abstract Syntax Tree (AST). */
 public class IntermediateCodeGenerator extends GenericVisitor<String> {
     private final List<String> instructions = new ArrayList<>();
-
     private int tempCounter = 0;
     private int labelCounter = 0;
-
-    private Stack<String> loopEndLabels = new Stack<>();
+    private final Stack<String> loopEndLabels = new Stack<>();
 
     public IntermediateCodeGenerator() {
         super(null);
@@ -24,9 +22,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         tempCounter = 0;
         labelCounter = 0;
         loopEndLabels.clear();
-
         program.accept(this);
-
         return instructions;
     }
 
@@ -38,29 +34,15 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         return "L" + (labelCounter++);
     }
 
-    private boolean isNumeric(String s) {
-        if (s == null || s.isEmpty()) {
-            return false;
+    private int getTypeSize(String type) {
+        switch (type.toLowerCase()) {
+            case "int", "float":
+                return 4;
+            case "string":
+                return 8;
+            default:
+                return 0;
         }
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException e1) {
-            try {
-                Float.parseFloat(s);
-                return true;
-            } catch (NumberFormatException e2) {
-                return false;
-            }
-        }
-    }
-
-    private boolean isStringLiteral(String s) {
-        return s != null && s.startsWith("\"") && s.endsWith("\"") && s.length() >= 2;
-    }
-
-    private boolean isLiteral(String s) {
-        return isNumeric(s) || isStringLiteral(s);
     }
 
     @Override
@@ -74,10 +56,37 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     @Override
     public String visit(FunctionNode node) {
         instructions.add("FUNC " + node.getFunctionIdentifier().value() + ":");
-
         for (StatementNode st : node.getBody()) {
             st.accept(this);
         }
+        return null;
+    }
+
+    @Override
+    public String visit(VarDeclNode node) {
+        String varName = node.getVariableIdentifier().value();
+        String type = node.getType();
+        List<Integer> dimensions = node.getDimensions();
+
+        int numberOfElements = 1;
+        if (dimensions != null && !dimensions.isEmpty()) {
+            for (int dim : dimensions) {
+                numberOfElements = numberOfElements * dim;
+            }
+        }
+
+        int typeSize = getTypeSize(type);
+        int totalBytes = numberOfElements * typeSize;
+
+        instructions.add("ALLOC " + varName + ", " + totalBytes);
+        return null;
+    }
+
+    @Override
+    public String visit(AssignmentNode node) {
+        String rightResult = node.getRight().accept(this);
+        String leftResult = node.getLeft().accept(this);
+        instructions.add(leftResult + " = " + rightResult);
         return null;
     }
 
@@ -89,77 +98,21 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     }
 
     @Override
-    public String visit(StringLiteralNode node) {
-        return "\"" + node.getValue() + "\"";
-    }
-
-    @Override
-    public String visit(VarDeclNode node) {
-        return null;
-    }
-
-    @Override
-    public String visit(AssignmentNode node) {
-        String exprResult = node.getRight().accept(this);
-
-        instructions.add(node.getLeft().getVariableIdentifier().value() + " = " + exprResult);
-        return null;
-    }
-
-    @Override
-    public String visit(VarNode node) {
-        return node.getVariableIdentifier().value();
-    }
-
-    @Override
-    public String visit(IntLiteralNode node) {
-        return node.getValue();
-    }
-
-    @Override
-    public String visit(FloatLiteralNode node) {
-        return node.getValue();
-    }
-
-    @Override
-    public String visit(BinaryOpNode node) {
-        String leftResult = node.getLeft().accept(this);
-        String rightResult = node.getRight().accept(this);
-
-        if (isLiteral(leftResult)) {
-            String tempLeft = newTemp();
-            instructions.add(tempLeft + " = " + leftResult);
-            leftResult = tempLeft;
-        }
-
-        if (isLiteral(rightResult)) {
-            String tempRight = newTemp();
-            instructions.add(tempRight + " = " + rightResult);
-            rightResult = tempRight;
-        }
-
-        String temp = newTemp();
-        instructions.add(temp + " = " + leftResult + " " + node.getOperator() + " " + rightResult);
-
-        return temp;
-    }
-
-    @Override
     public String visit(ReadNode node) {
-        instructions.add("READ " + node.getVariable().getVariableIdentifier().value());
+        String var = node.getVariable().accept(this);
+        instructions.add("READ " + var);
+        return null;
+    }
+
+    @Override
+    public String visit(ReturnNode node) {
+        instructions.add("RETURN");
         return null;
     }
 
     @Override
     public String visit(IfNode node) {
         String conditionResult = node.getCondition().accept(this);
-
-        if (isLiteral(conditionResult)) {
-            String tempLiteral = newTemp();
-            instructions.add(tempLiteral + " = " + conditionResult);
-            conditionResult = tempLiteral;
-        }
-
         String elseLabel = newLabel();
         String endIfLabel = newLabel();
 
@@ -183,7 +136,6 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     public String visit(ForNode node) {
         String loopCondLabel = newLabel();
         String loopEndLabel = newLabel();
-
         loopEndLabels.push(loopEndLabel);
 
         if (node.getInit() != null) {
@@ -191,27 +143,17 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         }
 
         instructions.add(loopCondLabel + ":");
-
         String conditionResult = node.getCondition().accept(this);
 
-        if (isLiteral(conditionResult)) {
-            String tempLiteral = newTemp();
-            instructions.add(tempLiteral + " = " + conditionResult);
-            conditionResult = tempLiteral;
-        }
-
         instructions.add("IF_FALSE " + conditionResult + " GOTO " + loopEndLabel);
-
         if (node.getBody() != null) {
             node.getBody().accept(this);
         }
-
         if (node.getIncrement() != null) {
             node.getIncrement().accept(this);
         }
 
         instructions.add("GOTO " + loopCondLabel);
-
         instructions.add(loopEndLabel + ":");
         loopEndLabels.pop();
         return null;
@@ -226,8 +168,109 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     }
 
     @Override
-    public String visit(ReturnNode node) {
-        instructions.add("RETURN");
+    public String visit(BinaryOpNode node) {
+        String leftResult = node.getLeft().accept(this);
+        String rightResult = node.getRight().accept(this);
+        String temp = newTemp();
+        instructions.add(temp + " = " + leftResult + " " + node.getOperator() + " " + rightResult);
+        return temp;
+    }
+
+    @Override
+    public String visit(VarNode node) {
+        if (node.getDimensions().isEmpty()) {
+            return node.getVariableIdentifier().value();
+        }
+
+        String baseAddress = node.getVariableIdentifier().value();
+        List<String> dimResults = new ArrayList<>();
+
+        for (ExpressionNode dim : node.getDimensions()) {
+            dimResults.add(dim.accept(this));
+        }
+
+        StringBuilder accessIndex = new StringBuilder();
+        for (int i = 0; i < dimResults.size(); i++) {
+            if (i > 0) accessIndex.append("][");
+            accessIndex.append(dimResults.get(i));
+        }
+
+        return baseAddress + "[" + accessIndex + "]";
+    }
+
+    @Override
+    public String visit(AllocExpressionNode node) {
+        String type = node.getType();
+        int typeSize = getTypeSize(type);
+
+        List<String> dimResults = new ArrayList<>();
+        for (ExpressionNode dim : node.getDimensions()) {
+            dimResults.add(dim.accept(this));
+        }
+
+        String temp = newTemp();
+        String totalSizeExpr = String.join(" * ", dimResults);
+        String sizeTemp = newTemp();
+        instructions.add(sizeTemp + " = " + totalSizeExpr);
+        String bytesTemp = newTemp();
+        instructions.add(bytesTemp + " = " + sizeTemp + " * " + typeSize);
+        instructions.add(temp + " = ALLOC " + bytesTemp);
+        return temp;
+    }
+
+    @Override
+    public String visit(UnaryOpNode node) {
+        String exprResult = node.getExpressionNode().accept(this);
+        String temp = newTemp();
+        instructions.add(temp + " = " + node.getOperator() + " " + exprResult);
+        return temp;
+    }
+
+    @Override
+    public String visit(FunctionCallNode node) {
+        for (String param : node.getParameters()) {
+            instructions.add("PARAM " + param);
+        }
+        String temp = newTemp();
+        instructions.add(temp + " = CALL " + node.getName() + ", " + node.getParameters().size());
+        return temp;
+    }
+
+    @Override
+    public String visit(BlockNode node) {
+        for(StatementNode stmt : node.getNodes()) {
+            stmt.accept(this);
+        }
+        return null;
+    }
+
+    @Override
+    public String visit(EmptyStatementNode node) {
+        return null;
+    }
+
+    @Override
+    public String visit(NullNode node) {
+        return "null";
+    }
+
+    @Override
+    public String visit(IntLiteralNode node) {
+        return node.getValue();
+    }
+
+    @Override
+    public String visit(StringLiteralNode node) {
+        return node.getValue();
+    }
+
+    @Override
+    public String visit(FloatLiteralNode node) {
+        return node.getValue();
+    }
+
+    @Override
+    public String visit(DummyNode node) {
         return null;
     }
 }
