@@ -4,6 +4,7 @@ import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
 import AST.GraphvizVisualizer;
+import AST.ExpressionTreePrinter;
 import AS.SyntaxException;
 import Semantics.SemanticAnalyzer;
 import CodeGeneration.IntermediateCodeGenerator;
@@ -46,8 +47,8 @@ public class Main {
         }
         System.out.println();
         System.out.println(Messages.NO_SYNTAX_ERRORS);
-        System.out.println(Messages.AST_HEADER);
-        System.out.println(ast.toTree());
+        System.out.println(Messages.EXPR_TREE_HEADER);
+        System.out.println(ExpressionTreePrinter.collect(ast));
         if (showTree) {
             GraphvizVisualizer.show(ast);
         }

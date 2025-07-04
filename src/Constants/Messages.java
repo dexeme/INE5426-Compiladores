@@ -7,6 +7,8 @@ public class Messages {
     public static final String ERROR_UNRECOGNISED_TOKEN = "Token not recognised";
     public static final String ERROR_READING_FILE = "Error reading input file: ";
     public static final String TOTAL_LEXICAL_ERRORS = "Total lexical errors: ";
+    public static final String EXPR_TREE_HEADER = "Expression trees:";
+
 
     public static final String NO_LEXICAL_ERRORS = "No lexical errors found!";
     public static final String AST_HEADER = "AST:";

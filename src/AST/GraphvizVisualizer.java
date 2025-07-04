@@ -32,6 +32,12 @@ public class GraphvizVisualizer {
         }
     }
 
+    /** Generate and return the dot representation for the expression trees. */
+    public static String generateDot(ASTNode root) {
+        DotVisitor visitor = new DotVisitor();
+        return visitor.generate(root);
+    }
+
     private static class DotVisitor extends GenericVisitor<String> {
         private final StringBuilder sb = new StringBuilder();
         private final AtomicInteger counter = new AtomicInteger();
