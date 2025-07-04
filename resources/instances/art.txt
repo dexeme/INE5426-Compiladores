@@ -1,3 +1,7 @@
+def printLinha(){
+    print "=======================================";
+}
+
 def main() {
     int i;
     int j;
@@ -6,9 +10,10 @@ def main() {
     int linha;
     int coluna;
     int espacos;
+    int varVoid;
 
     print "INICIO DO GERADOR DE PADROES ARTISTICOS";
-    print "=======================================";
+    varVoid = printLinha();
 
     tamanho = 5;
 
@@ -16,7 +21,7 @@ def main() {
     for (linha = 0; linha < tamanho; linha = linha + 1) {
         print "* * * * *";
     }
-    print "=======================================";
+    varVoid = printLinha();
 
     print "Padrao 2: Triangulo Retangulo";
     for (linha = 0; linha < tamanho; linha = linha + 1) {
@@ -36,7 +41,7 @@ def main() {
             print "* * * * *";
         }
     }
-    print "=======================================";
+    varVoid = printLinha();
 
     print "Padrao 3: Piramide";
     tamanho = 5;
@@ -57,7 +62,7 @@ def main() {
             print "* * * * *";
         }
     }
-    print "=======================================";
+    varVoid = printLinha();
 
     print "Padrao 4: Tabela de Multiplicacao";
     tamanho = 5;
@@ -73,7 +78,7 @@ def main() {
         }
         print "---";
     }
-    print "=======================================";
+    varVoid = printLinha();
 
     print "Padrao 5: Caixa Vazia";
     tamanho = 6;
@@ -90,7 +95,7 @@ def main() {
             }
         }
     }
-    print "=======================================";
+    varVoid = printLinha();
 
     print "Padrao 6: Contagem Regressiva em Loop";
     for (i = 3; i > 0; i = i - 1) {

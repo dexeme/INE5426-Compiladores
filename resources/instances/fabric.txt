@@ -1,3 +1,7 @@
+def printLinha(){
+    print "=========================================";
+}
+
 def main() {
     int i;
     int j;
@@ -10,9 +14,10 @@ def main() {
     int produtosDefeituosos;
     int cicloDeQualidade;
     int eficiencia;
+    int varVoid;
 
     print "INICIO DA SIMULACAO DA LINHA DE PRODUCAO";
-    print "=========================================";
+    varVoid = printLinha();
 
     materiaPrima = 1000;
     produtosAprovados = 0;
@@ -37,7 +42,7 @@ def main() {
             break;
         }
     }
-    print "=========================================";
+    varVoid = printLinha();
 
     print "Fase 2: Fabricacao de Componentes";
     for (i = 0; i < 10; i = i + 1) {
@@ -54,7 +59,7 @@ def main() {
         print "  Pecas Tipo B fabricadas:";
         print pecasTipoB[i];
     }
-    print "=========================================";
+    varVoid = printLinha();
 
     print "Fase 3: Montagem dos Produtos";
     for (i = 0; i < 10; i = i + 1) {
@@ -71,7 +76,7 @@ def main() {
             print "  Faltam pecas do tipo A.";
         }
     }
-    print "=========================================";
+    varVoid = printLinha();
 
     print "Fase 4: Controle de Qualidade";
     for (cicloDeQualidade = 0; cicloDeQualidade < 3; cicloDeQualidade = cicloDeQualidade + 1) {
@@ -95,7 +100,7 @@ def main() {
             }
         }
     }
-    print "=========================================";
+    varVoid = printLinha();
 
     print "Fase 5: Embalagem";
     for (i = 0; i < 10; i = i + 1) {
@@ -105,7 +110,7 @@ def main() {
             print i;
         }
     }
-    print "=========================================";
+    varVoid = printLinha();
 
     print "RELATORIO FINAL DE PRODUCAO";
     print "Total de produtos aprovados e embalados:";
