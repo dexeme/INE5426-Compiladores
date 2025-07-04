@@ -15,9 +15,10 @@ public class GraphvizVisualizer {
         try {
             DotVisitor visitor = new DotVisitor();
             String dot = visitor.generate(root);
-            Path dotFile = Files.createTempFile("ast", ".dot");
+            Path projectRoot = Path.of("").toAbsolutePath();
+            Path dotFile = projectRoot.resolve("expression_tree.dot");
             Files.writeString(dotFile, dot);
-            Path pngFile = Files.createTempFile("ast", ".png");
+            Path pngFile = projectRoot.resolve("expression_tree.png");
             new ProcessBuilder("dot", "-Tpng", dotFile.toString(), "-o", pngFile.toString())
                     .inheritIO()
                     .start()
