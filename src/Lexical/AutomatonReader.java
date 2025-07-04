@@ -187,7 +187,11 @@ record TransitionKey(String fromState, String symbol) implements Comparable<Tran
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TransitionKey(String state, String symbol1))) return false;
-        return fromState.equals(state) && symbol.equals(symbol1);
+        if (o instanceof TransitionKey key) {
+            return this.fromState.equals(key.fromState()) &&
+                    this.symbol.equals(key.symbol());
+        }
+        return false;
     }
+
 }

@@ -15,7 +15,7 @@ public class SyntaxAnalyzer {
         this.tokens = new ArrayList<>(tokens);
         this.tokens.add(new Token(TokenEnum.END, "", -1, -1));
         this.index = 0;
-        this.lookahead = tokens.getFirst();
+        this.lookahead = tokens.get(0);
     }
 
     public ProgramNode parse() {
