@@ -1,0 +1,20 @@
+def main() {
+	int x;
+	x = 1;
+
+	int result[10];
+	result = new int[10];
+
+    int i;
+	for (i = 0; i < 10; i = i + 1) {
+	    result = calcula(x);
+	    if (i == 5) {
+	       break;
+	    }
+	}
+}
+
+def calcula(int x) {
+	x = x + 1;
+	return;
+}

@@ -64,21 +64,6 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
 
     @Override
     public String visit(VarDeclNode node) {
-        String varName = node.getVariableIdentifier().value();
-        String type = node.getType();
-        List<Integer> dimensions = node.getDimensions();
-
-        int numberOfElements = 1;
-        if (dimensions != null && !dimensions.isEmpty()) {
-            for (int dim : dimensions) {
-                numberOfElements = numberOfElements * dim;
-            }
-        }
-
-        int typeSize = getTypeSize(type);
-        int totalBytes = numberOfElements * typeSize;
-
-        instructions.add("ALLOC " + varName + ", " + totalBytes);
         return null;
     }
 
@@ -116,7 +101,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         String elseLabel = newLabel();
         String endIfLabel = newLabel();
 
-        instructions.add("IF_FALSE " + conditionResult + " GOTO " + elseLabel);
+        instructions.add("IF FALSE " + conditionResult + " GOTO " + elseLabel);
         for (StatementNode st : node.getThenBranch()) {
             st.accept(this);
         }
@@ -145,7 +130,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         instructions.add(loopCondLabel + ":");
         String conditionResult = node.getCondition().accept(this);
 
-        instructions.add("IF_FALSE " + conditionResult + " GOTO " + loopEndLabel);
+        instructions.add("IF FALSE " + conditionResult + " GOTO " + loopEndLabel);
         if (node.getBody() != null) {
             node.getBody().accept(this);
         }
