@@ -4,7 +4,7 @@ SRC_DIR=src
 BIN_DIR=bin
 MAIN_CLASS=Main
 JAVA_FILES=$(shell find $(SRC_DIR) -name '*.java')
-JAVAC_FLAGS=-g:none -O -Xlint:all -encoding UTF-8
+JAVAC_FLAGS=-g:none -O -encoding UTF-8
 
 .PHONY: all run clean
 

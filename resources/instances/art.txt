@@ -1,0 +1,106 @@
+def main() {
+    int i;
+    int j;
+    int k;
+    int tamanho;
+    int linha;
+    int coluna;
+    int espacos;
+
+    print "INICIO DO GERADOR DE PADROES ARTISTICOS";
+    print "=======================================";
+
+    tamanho = 5;
+
+    print "Padrao 1: Quadrado Preenchido";
+    for (linha = 0; linha < tamanho; linha = linha + 1) {
+        print "* * * * *";
+    }
+    print "=======================================";
+
+    print "Padrao 2: Triangulo Retangulo";
+    for (linha = 0; linha < tamanho; linha = linha + 1) {
+        if (linha == 0) {
+             print "*";
+        }
+        if (linha == 1) {
+            print "* *";
+        }
+        if (linha == 2) {
+            print "* * *";
+        }
+        if (linha == 3) {
+            print "* * * *";
+        }
+        if (linha == 4) {
+            print "* * * * *";
+        }
+    }
+    print "=======================================";
+
+    print "Padrao 3: Piramide";
+    tamanho = 5;
+    for (linha = 1; linha <= tamanho; linha = linha + 1) {
+        if (linha == 1) {
+            print "    *";
+            }
+        if (linha == 2) {
+            print "   * *";
+        }
+        if (linha == 3) {
+            print "  * * *";
+        }
+        if (linha == 4) {
+            print " * * * *";
+        }
+        if (linha == 5) {
+            print "* * * * *";
+        }
+    }
+    print "=======================================";
+
+    print "Padrao 4: Tabela de Multiplicacao";
+    tamanho = 5;
+    for (i = 1; i <= tamanho; i = i + 1) {
+        for (j = 1; j <= tamanho; j = j + 1) {
+            k = i * j;
+            print " ";
+            print i;
+            print "x";
+            print j;
+            print "=";
+            print k;
+        }
+        print "---";
+    }
+    print "=======================================";
+
+    print "Padrao 5: Caixa Vazia";
+    tamanho = 6;
+    for (linha = 0; linha < tamanho; linha = linha + 1) {
+        if (linha == 0){
+            print "* * * * * *";
+        }
+        if (linha == 5) {
+            print "* * * * * *";
+        }
+        if (linha > 0) {
+            if (linha < 5) {
+                print "* *";
+            }
+        }
+    }
+    print "=======================================";
+
+    print "Padrao 6: Contagem Regressiva em Loop";
+    for (i = 3; i > 0; i = i - 1) {
+        print "Contagem:";
+        print i;
+        for (j = i; j > 0; j = j - 1) {
+            print "  Sub-contagem:";
+            print j;
+        }
+    }
+
+    print "FIM DO GERADOR DE PADROES";
+}

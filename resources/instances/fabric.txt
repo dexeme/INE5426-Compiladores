@@ -1,0 +1,123 @@
+def main() {
+    int i;
+    int j;
+    int lote;
+    int materiaPrima;
+    int pecasTipoA[10];
+    int pecasTipoB[10];
+    int produtosMontados[10];
+    int produtosAprovados;
+    int produtosDefeituosos;
+    int cicloDeQualidade;
+    int eficiencia;
+
+    print "INICIO DA SIMULACAO DA LINHA DE PRODUCAO";
+    print "=========================================";
+
+    materiaPrima = 1000;
+    produtosAprovados = 0;
+    produtosDefeituosos = 0;
+
+    for (i = 0; i < 10; i = i + 1) {
+        pecasTipoA[i] = 0;
+        pecasTipoB[i] = 0;
+        produtosMontados[i] = 0;
+    }
+
+    print "Fase 1: Processamento de Materia-Prima";
+    for (lote = 0; lote < 5; lote = lote + 1) {
+        print "Processando lote de materia-prima numero:";
+        print lote + 1;
+        if (materiaPrima >= 150) {
+            materiaPrima = materiaPrima - 150;
+            print "Lote processado com sucesso. Materia-prima restante:";
+            print materiaPrima;
+        } else {
+            print "Materia-prima insuficiente para processar novo lote. Parando.";
+            break;
+        }
+    }
+    print "=========================================";
+
+    print "Fase 2: Fabricacao de Componentes";
+    for (i = 0; i < 10; i = i + 1) {
+        print "Fabricando componentes para o produto:";
+        print i;
+        for (j = 0; j < 5; j = j + 1) {
+            pecasTipoA[i] = pecasTipoA[i] + 1;
+        }
+        for (j = 0; j < 3; j = j + 1) {
+            pecasTipoB[i] = pecasTipoB[i] + 1;
+        }
+        print "  Pecas Tipo A fabricadas:";
+        print pecasTipoA[i];
+        print "  Pecas Tipo B fabricadas:";
+        print pecasTipoB[i];
+    }
+    print "=========================================";
+
+    print "Fase 3: Montagem dos Produtos";
+    for (i = 0; i < 10; i = i + 1) {
+        print "Tentando montar produto:";
+        print i;
+        if (pecasTipoA[i] >= 5) {
+            if (pecasTipoB[i] >= 3) {
+                print "  Componentes suficientes. Produto montado.";
+                produtosMontados[i] = 1;
+            } else {
+                print "  Faltam pecas do tipo B.";
+            }
+        } else {
+            print "  Faltam pecas do tipo A.";
+        }
+    }
+    print "=========================================";
+
+    print "Fase 4: Controle de Qualidade";
+    for (cicloDeQualidade = 0; cicloDeQualidade < 3; cicloDeQualidade = cicloDeQualidade + 1) {
+        print "Executando ciclo de qualidade numero:";
+        print cicloDeQualidade + 1;
+        for (i = 0; i < 10; i = i + 1) {
+            if (produtosMontados[i] == 1) {
+                eficiencia = i * 10;
+                if (cicloDeQualidade == 1) {
+                    eficiencia = eficiencia + 15;
+                }
+                if (eficiencia > 70) {
+                    print "  Produto OK:";
+                    print i;
+                } else {
+                    print "  Produto com DEFEITO detectado:";
+                    print i;
+                    produtosMontados[i] = 0;
+                    produtosDefeituosos = produtosDefeituosos + 1;
+                }
+            }
+        }
+    }
+    print "=========================================";
+
+    print "Fase 5: Embalagem";
+    for (i = 0; i < 10; i = i + 1) {
+        if (produtosMontados[i] == 1) {
+            produtosAprovados = produtosAprovados + 1;
+            print "Embalando produto aprovado:";
+            print i;
+        }
+    }
+    print "=========================================";
+
+    print "RELATORIO FINAL DE PRODUCAO";
+    print "Total de produtos aprovados e embalados:";
+    print produtosAprovados;
+    print "Total de produtos defeituosos:";
+    print produtosDefeituosos;
+    print "Materia-prima final:";
+    print materiaPrima;
+
+    if (produtosAprovados > 5) {
+        print "Meta de producao ATINGIDA.";
+    } else {
+        print "Meta de producao NAO ATINGIDA.";
+    }
+}
