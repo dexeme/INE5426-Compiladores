@@ -186,7 +186,7 @@ public class LexicalAnalyzer {
             scanner.close();
             return sourceCode;
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+              throw new RuntimeException(Messages.FILE_NOT_FOUND + filePath);
         }
     }
 

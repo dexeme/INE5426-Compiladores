@@ -21,6 +21,7 @@ public class Messages {
     public static final String ERROR_UNDECLARED_VAR = "Undeclared variable";
     public static final String ERROR_TYPE_MISMATCH = "Type mismatch";
     public static final String ERROR_BREAK_OUTSIDE = "'break' used outside of loop";
+    public static final String FILE_NOT_FOUND = "File not found: ";
 
     private Messages() {
     }

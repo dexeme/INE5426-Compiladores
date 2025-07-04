@@ -19,6 +19,10 @@ public class Main {
         }
 
         String inputFilePath = args[0];
+        if (!inputFilePath.endsWith(".txt")) {
+            System.out.println("Input file must have .txt extension");
+            return;
+        }
         boolean showTree = args.length == 2 && args[1].equals("--showTree");
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
 

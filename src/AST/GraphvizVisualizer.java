@@ -38,7 +38,7 @@ public class GraphvizVisualizer {
 
         String generate(ASTNode root) {
             sb.append("digraph AST {\n");
-            String id = root.accept(this);
+            root.accept(this);
             sb.append("}\n");
             return sb.toString();
         }
@@ -53,51 +53,71 @@ public class GraphvizVisualizer {
             sb.append("  ").append(from).append(" -> ").append(to).append(";\n");
         }
 
+        private void visitExprIfArithmetic(ExpressionNode expr) {
+            if (expr == null) return;
+            if (expr instanceof VarNode var) {
+                boolean printed = false;
+                for (ExpressionNode d : var.getDimensions()) {
+                    if (containsArithmetic(d)) {
+                        d.accept(this);
+                        printed = true;
+                    }
+                }
+                if (!printed && containsArithmetic(expr)) {
+                    expr.accept(this);
+                }
+            } else if (containsArithmetic(expr)) {
+                expr.accept(this);
+            }
+        }
+
+        private boolean containsArithmetic(ExpressionNode node) {
+            if (node instanceof BinaryOpNode || node instanceof UnaryOpNode) {
+                return true;
+            }
+            if (node instanceof VarNode var) {
+                for (ExpressionNode d : var.getDimensions()) {
+                    if (containsArithmetic(d)) return true;
+                }
+            } else if (node instanceof AllocExpressionNode alloc) {
+                for (ExpressionNode d : alloc.getDimensions()) {
+                    if (containsArithmetic(d)) return true;
+                }
+            }
+            return false;
+        }
+
         @Override
         public String visit(ProgramNode node) {
-            String id = newNode("Program");
             for (ASTNode fn : node.getFunctions()) {
-                String cid = fn.accept(this);
-                edge(id, cid);
+                fn.accept(this);
             }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(FunctionNode node) {
-            String id = newNode("Function\n" + node.getFunctionIdentifier().value());
-            for (Parameter p : node.getParameters()) {
-                String pid = newNode("Param\n" + p.type() + " " + p.name());
-                edge(id, pid);
-            }
             for (StatementNode st : node.getBody()) {
-                String sid = st.accept(this);
-                edge(id, sid);
+                st.accept(this);
             }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(VarDeclNode node) {
-            String label = "VarDecl\n" + node.getType() + " " + node.getVariableIdentifier().value();
-            String id = newNode(label);
-            if (node.getDimensions() != null && !node.getDimensions().isEmpty()) {
-                String dims = newNode("Dims\n" + node.getDimensions());
-                edge(id, dims);
-            }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(AssignmentNode node) {
-            String id = newNode("Assign");
-            String left = node.getLeft().accept(this);
-            edge(id, left);
-            if (node.getRight() != null) {
-                String expr = node.getRight().accept(this);
-                edge(id, expr);
+            if (node.getRight() instanceof ExpressionNode expr) {
+                if (expr instanceof IntLiteralNode || expr instanceof FloatLiteralNode) {
+                    expr.accept(this);
+                } else {
+                    visitExprIfArithmetic(expr);
+                }
             }
-            return id;
+            return null;
         }
 
         @Override
@@ -137,77 +157,59 @@ public class GraphvizVisualizer {
 
         @Override
         public String visit(PrintNode node) {
-            String id = newNode("Print");
-            String expr = node.getExpression().accept(this);
-            edge(id, expr);
-            return id;
+            visitExprIfArithmetic(node.getExpression());
+            return null;
         }
 
         @Override
         public String visit(ReadNode node) {
-            String id = newNode("Read");
-            String var = node.getVariable().accept(this);
-            edge(id, var);
-            return id;
+            return null;
         }
 
         @Override
         public String visit(ReturnNode node) {
-            return newNode("Return");
+            return null;
         }
 
         @Override
         public String visit(IfNode node) {
-            String id = newNode("If");
-            String cond = node.getCondition().accept(this);
-            edge(id, cond);
-            String thenId = newNode("Then");
-            edge(id, thenId);
+            visitExprIfArithmetic(node.getCondition());
             for (StatementNode st : node.getThenBranch()) {
-                String stId = st.accept(this);
-                edge(thenId, stId);
+                st.accept(this);
             }
             if (node.getElseBranch() != null && !node.getElseBranch().isEmpty()) {
-                String elseId = newNode("Else");
-                edge(id, elseId);
                 for (StatementNode st : node.getElseBranch()) {
-                    String stId = st.accept(this);
-                    edge(elseId, stId);
+                    st.accept(this);
                 }
             }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(ForNode node) {
-            String id = newNode("For");
             if (node.getInit() != null) {
-                String init = node.getInit().accept(this);
-                edge(id, init);
+                node.getInit().accept(this);
             }
             if (node.getCondition() != null) {
-                String cond = node.getCondition().accept(this);
-                edge(id, cond);
+                visitExprIfArithmetic(node.getCondition());
             }
             if (node.getIncrement() != null) {
-                String incr = node.getIncrement().accept(this);
-                edge(id, incr);
+                node.getIncrement().accept(this);
             }
             if (node.getBody() != null) {
-                String body = node.getBody().accept(this);
-                edge(id, body);
+                node.getBody().accept(this);
             }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(BreakNode node) {
-            return newNode("Break");
+            return null;
         }
 
         @Override
         public String visit(DummyNode node) {
-            return newNode(node.getName());
+            return null;
         }
 
         @Override
@@ -222,17 +224,15 @@ public class GraphvizVisualizer {
 
         @Override
         public String visit(BlockNode node) {
-            String id = newNode("Block");
             for (StatementNode st : node.getNodes()) {
-                String sid = st.accept(this);
-                edge(id, sid);
+                st.accept(this);
             }
-            return id;
+            return null;
         }
 
         @Override
         public String visit(EmptyStatementNode node) {
-            return newNode("EmptyStmt");
+            return null;
         }
 
         @Override
