@@ -1,8 +1,8 @@
 package Lexical;
 
-import Symbols.Symboll;
+import Symbols.SymbolEnum;
 
-public enum TokenEnum  implements Symboll {
+public enum TokenEnum  implements SymbolEnum {
     DEF,
     IDENT,
     OPEN_PAREN,

@@ -3,7 +3,7 @@ package AS;
 import Lexical.Token;
 import Lexical.TokenEnum;
 import AST.*;
-import Syntax.SyntaxException;
+
 import java.util.*;
 
 public class SyntaxAnalyzer {

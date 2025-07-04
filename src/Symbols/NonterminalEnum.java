@@ -1,6 +1,6 @@
 package Symbols;
 
-public enum NonterminalEnum implements Symboll {
+public enum NonterminalEnum implements SymbolEnum {
         PROGRAM,
         FUNCLIST,
         FUNCDEF,

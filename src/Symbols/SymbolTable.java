@@ -3,53 +3,48 @@ package Symbols;
 import Lexical.Token;
 import Semantics.Type;
 
+import java.util.HashMap;
+
 public class SymbolTable {
-    private SymbolEntry head;
-    private int scopeLevel;
+
+    public final HashMap<String,SymbolEntry> symbolTable;
+
+    public SymbolTable() {
+        this.symbolTable = new HashMap<>();
+    }
 
     public void clear() {
-        head = null;
-        scopeLevel = 0;
+        symbolTable.clear();
     }
 
     public void add(Token token) {
-        head = new SymbolEntry(token, null, scopeLevel, head);
+        add(token, Type.UNKNOWN);
     }
 
-    /** Add an identifier with its type to the current scope. */
     public void add(Token token, Type type) {
-        head = new SymbolEntry(token, type, scopeLevel, head);
+        String name = token.value();
+        if (symbolTable.containsKey(name)) {
+            throw new IllegalArgumentException("Symbol already exists: " + name);
+        }
+        symbolTable.put(name, new SymbolEntry(token, type));
     }
 
-    /** Find the first entry with given name, searching outward through scopes. */
     public SymbolEntry lookup(String name) {
-        SymbolEntry current = head;
-        while (current != null) {
-            if (current.token().value().equals(name)) return current;
-            current = current.next();
-        }
-        return null;
+        return symbolTable.getOrDefault(name, null);
     }
 
-    /** Check if an identifier exists in the current scope only. */
-    public boolean existsInCurrentScope(String name) {
-        SymbolEntry current = head;
-        while (current != null && current.scope() == scopeLevel) {
-            if (current.token().value().equals(name)) return true;
-            current = current.next();
-        }
-        return false;
+    public boolean exists(String name) {
+        return symbolTable.containsKey(name);
     }
 
-    public SymbolEntry getHead() {
-        return head;
+    public boolean isEmpty() {
+        return symbolTable.isEmpty();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        SymbolEntry current = head;
-        while (current != null) {
+        for (SymbolEntry current : symbolTable.values()) {
             String formattedToken = String.format("\tNome: %s | Tipo: %s | Posição: (linha %d, coluna %d)",
                     current.token().value(),
                     current.type() != null ? current.type() : "-",
@@ -57,8 +52,8 @@ public class SymbolTable {
                     current.token().column()
             );
             sb.insert(0, formattedToken + "\n");
-            current = current.next();
         }
         return sb.toString();
     }
+
 }

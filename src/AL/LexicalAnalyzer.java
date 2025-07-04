@@ -1,8 +1,10 @@
 package AL;
 
+import Constants.Messages;
 import Lexical.*;
 import Symbols.SymbolTable;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class LexicalAnalyzer {
@@ -11,15 +13,22 @@ public class LexicalAnalyzer {
     private static final Map<String, TokenEnum> comparators;
     private static final Map<String, TokenEnum> specialSymbols;
 
+    private static final String automatonFilePath = "resources/automaton.json";
+
     private final Automaton automaton;
     private final List<LexicalException> errors = new ArrayList<>();
     private final SymbolTable symbolTable = new SymbolTable();
 
-    public LexicalAnalyzer(Automaton automaton) {
-        this.automaton = automaton;
+    public LexicalAnalyzer() {
+        this.automaton = AutomatonReader.readAutomaton(automatonFilePath);
     }
 
-    public List<Token> analyzeCode(Map<Integer, String> lines) {
+    public List<Token> analyzeCode(String filePath) {
+        Map<Integer,String> lines = readFile(filePath);
+        return analyzeCode(lines);
+    }
+
+    public List<Token> analyzeCode(Map<Integer,String> lines) {
         errors.clear();
         symbolTable.clear();
         List<Token> tokens = new ArrayList<>();
@@ -103,7 +112,7 @@ public class LexicalAnalyzer {
                         try {
                             TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
                             Token lex = new Token(type, lexemeStr, lineNumber, column);
-                            if (type == TokenEnum.IDENT && !symbolTable.existsInCurrentScope(lex.value())) {
+                            if (type == TokenEnum.IDENT && !symbolTable.exists(lex.value())) {
                                 symbolTable.add(lex);
                             }
                             tokens.add(lex);
@@ -163,6 +172,22 @@ public class LexicalAnalyzer {
         }
 
         throw new LexicalException(LexicalErrorType.UNRECOGNISED_TOKEN, lexeme, line, column);
+    }
+
+    private Map<Integer, String> readFile(String filePath) {
+        Map<Integer, String> sourceCode = new LinkedHashMap<>();
+        try {
+            Scanner scanner = new Scanner(new java.io.File(filePath));
+            int lineNumber = 1;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                sourceCode.put(lineNumber++, line);
+            }
+            scanner.close();
+            return sourceCode;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     static {

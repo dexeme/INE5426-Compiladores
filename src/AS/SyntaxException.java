@@ -1,4 +1,4 @@
-package Syntax;
+package AS;
 
 import Lexical.Token;
 import Symbols.NonterminalEnum;

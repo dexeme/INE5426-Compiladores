@@ -591,9 +591,9 @@ public enum ProductionEnum {
     );
 
     private final NonterminalEnum head;
-    private final List<Symboll> body;
+    private final List<SymbolEnum> body;
 
-    ProductionEnum(NonterminalEnum head, List<Symboll> body) {
+    ProductionEnum(NonterminalEnum head, List<SymbolEnum> body) {
         this.head = head;
         this.body = body;
     }
@@ -602,7 +602,7 @@ public enum ProductionEnum {
         return head;
     }
 
-    public List<Symboll> getBody() {
+    public List<SymbolEnum> getBody() {
         return body;
     }
 

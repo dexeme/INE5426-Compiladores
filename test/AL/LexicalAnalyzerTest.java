@@ -1,4 +1,4 @@
-package test.AL;
+package AL;
 
 import AL.*;
 import Lexical.*;
@@ -10,8 +10,7 @@ import java.util.*;
 public class LexicalAnalyzerTest {
     private static final LexicalAnalyzer analyzer;
     static {
-        Automaton automaton = AutomatonReader.readAutomaton("resources/automaton.json");
-        analyzer = new LexicalAnalyzer(automaton);
+        analyzer = new LexicalAnalyzer();
     }
 
     private List<Token> analyze(String... lines) {

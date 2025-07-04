@@ -1,4 +1,4 @@
-package test.ASem;
+package ASem;
 
 import AL.*;
 import AS.SyntaxAnalyzer;
@@ -17,7 +17,7 @@ public class SemanticAnalyzerTest {
     private static final LexicalAnalyzer analyzer;
     static {
         Automaton automaton = AutomatonReader.readAutomaton("resources/automaton.json");
-        analyzer = new LexicalAnalyzer(automaton);
+        analyzer = new LexicalAnalyzer();
     }
 
     private ProgramNode parse(String... lines) {

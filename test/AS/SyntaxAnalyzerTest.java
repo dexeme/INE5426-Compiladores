@@ -1,4 +1,4 @@
-package test.AS;
+package AS;
 
 import AL.*;
 import AST.ProgramNode;
@@ -6,7 +6,6 @@ import AS.SyntaxAnalyzer;
 import Lexical.Automaton;
 import Lexical.AutomatonReader;
 import Lexical.Token;
-import Syntax.SyntaxException;
 import org.junit.Test;
 
 import java.util.*;
@@ -17,7 +16,7 @@ public class SyntaxAnalyzerTest {
     private static final LexicalAnalyzer analyzer;
     static {
         Automaton automaton = AutomatonReader.readAutomaton("resources/automaton.json");
-        analyzer = new LexicalAnalyzer(automaton);
+        analyzer = new LexicalAnalyzer();
     }
 
     private SyntaxAnalyzer newAnalyzer(String... lines) {

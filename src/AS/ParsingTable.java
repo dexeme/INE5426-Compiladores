@@ -1,9 +1,13 @@
-package Syntax;
+package AS;
 
 import Lexical.TokenEnum;
 import Symbols.NonterminalEnum;
 import Symbols.ProductionEnum;
 
+
+/**
+ * This table was integrated into the SyntaxAnalyzer class. So it is no longer used, but it is kept here for reference.
+ */
 public class ParsingTable {
 
     public ProductionEnum getProduction(NonterminalEnum nonterminal, TokenEnum token) {
