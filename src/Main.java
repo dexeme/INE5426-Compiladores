@@ -3,7 +3,7 @@ import AL.LexicalAnalyzer;
 import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
-import AST.TreeVisualizer;
+import AST.GraphvizVisualizer;
 import AS.SyntaxException;
 import Semantics.SemanticAnalyzer;
 import CodeGeneration.IntermediateCodeGenerator;
@@ -45,7 +45,7 @@ public class Main {
         System.out.println(Messages.AST_HEADER);
         System.out.println(ast.toTree());
         if (showTree) {
-            TreeVisualizer.generateTreeImage(ast.toTree(), false);
+            GraphvizVisualizer.show(ast);
         }
 
         SemanticAnalyzer sem = new SemanticAnalyzer();
