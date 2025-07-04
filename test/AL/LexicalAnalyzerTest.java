@@ -170,7 +170,7 @@ public class LexicalAnalyzerTest {
                 );
 
                 assertFalse(analyzer.getErrors().isEmpty());
-                assertEquals(LexicalErrorType.INVALID_TOKEN, analyzer.getErrors().getFirst().getType());
+                assertEquals(LexicalErrorType.INVALID_TOKEN, analyzer.getErrors().get(0).getType());
             }
 
             @Test

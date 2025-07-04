@@ -74,7 +74,8 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
             return Type.ERROR;
         }
         Type exprT = node.getRight().accept(this);
-        if (entry.type() != null && exprT != Type.ERROR && entry.type() != exprT) {
+        if (entry.type() != null && exprT != Type.ERROR && entry.type() != exprT
+                && !(node.getRight() instanceof FunctionCallNode)) {
             errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, node.getLeft().getVariableIdentifier()));
         }
         return entry.type();
