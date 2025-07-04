@@ -1,4 +1,4 @@
-package AS;
+package test.AS;
 
 import AL.*;
 import AST.ProgramNode;

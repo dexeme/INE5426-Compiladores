@@ -15,7 +15,7 @@ $(BIN_DIR)/$(MAIN_CLASS).class: $(JAVA_FILES)
 	javac $(JAVAC_FLAGS) -d $(BIN_DIR) $(JAVA_FILES)
 
 run: all
-	java -cp $(BIN_DIR) $(MAIN_CLASS) $(FILE)
+	java -cp $(BIN_DIR) $(MAIN_CLASS) $(FILE) $(ARGS)
 
 clean:
-	rm -rf $(BIN_DIR) 
+	rm -rf $(BIN_DIR)

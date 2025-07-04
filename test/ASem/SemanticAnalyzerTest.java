@@ -1,4 +1,4 @@
-package ASem;
+package test.ASem;
 
 import AL.*;
 import AS.SyntaxAnalyzer;

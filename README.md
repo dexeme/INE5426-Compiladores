@@ -1,6 +1,7 @@
 # INE5426-Compiladores
 
-Este projeto é um compilador desenvolvido para a disciplina INE5426 - Compiladores. Ele realiza análise léxica, sintática, semântica e gera código intermediário para uma linguagem de programação didática.
+Este projeto é um compilador desenvolvido para a disciplina INE5426 - Compiladores. 
+Ele realiza análise léxica, sintática, semântica e gera código intermediário para uma linguagem de programação didática.
 A linguagem escolhida foi **Java**.
 
 ## Funcionalidades
@@ -8,7 +9,6 @@ A linguagem escolhida foi **Java**.
 - **Análise Sintática:** Constrói a AST e detecta erros de sintaxe.
 - **Análise Semântica:** Verifica declarações, tipos, escopos e gera uma árvore de escopos com tabelas de símbolos.
 - **Geração de Código Intermediário:** Produz uma representação intermediária do código.
-
 
 ## Como Executar
 
@@ -25,9 +25,14 @@ A linguagem escolhida foi **Java**.
    **Exemplo:**
    ```sh
    make run FILE=resources/instances/test/simpleCode1.txt
+     ```
+   
+   Para visualizar a Árvore de Sintaxe Abstrata (AST) gerada durante a
+   execução, adicione `ARGS=--showTree` ao comando `make run`:
+   
+   ```sh
+   make run FILE=resources/instances/test/dimensions.txt ARGS=--showTree
    ```
-
-
 
 ## Exemplos de entrada
 Veja exemplos em `resources/instances/test` para testar diferentes aspectos do compilador. 
@@ -44,7 +49,7 @@ para executá-los, basta utilizar o(s) seguinte(s) comando(s):
 ```sh
   make run FILE=resources/instances/program/fabric.txt
 ```
-
+**OBS**: Lembre-se de adicionar ARGS=--showTree para visualizar a AST.
 
 ## Detalhes de implementação
 - **Análise Léxica**: O autômato utilizado para a etapa de Análise Léxica está localizado em `resources/automaton.json`. 

@@ -3,6 +3,7 @@ import AL.LexicalAnalyzer;
 import Constants.Messages;
 import AS.SyntaxAnalyzer;
 import AST.ProgramNode;
+import AST.TreeVisualizer;
 import AS.SyntaxException;
 import Semantics.SemanticAnalyzer;
 import CodeGeneration.IntermediateCodeGenerator;
@@ -12,12 +13,13 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        if (args.length != 1){
-            System.out.println("Usage: java Main <input_file>");
+        if (args.length < 1 || args.length > 2) {
+            System.out.println("Usage: java Main <input_file> [--showTree]");
             return;
         }
 
         String inputFilePath = args[0];
+        boolean showTree = args.length == 2 && args[1].equals("--showTree");
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
 
         long startTime = System.currentTimeMillis();
@@ -42,6 +44,9 @@ public class Main {
         System.out.println(Messages.NO_SYNTAX_ERRORS);
         System.out.println(Messages.AST_HEADER);
         System.out.println(ast.toTree());
+        if (showTree) {
+            TreeVisualizer.generateTreeImage(ast.toTree(), false);
+        }
 
         SemanticAnalyzer sem = new SemanticAnalyzer();
         sem.analyze(ast);
@@ -68,5 +73,4 @@ public class Main {
         sem.printScopeTree();
         System.out.println("Compilation time: " + (endTime - startTime) + " ms");
     }
-
 }

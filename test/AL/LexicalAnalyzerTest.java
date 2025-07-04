@@ -1,4 +1,4 @@
-package AL;
+package test.AL;
 
 import AL.*;
 import Lexical.*;
@@ -197,8 +197,5 @@ public class LexicalAnalyzerTest {
             );
 
             assertEquals(expected, tokens);
-
-
-
     }
         }
