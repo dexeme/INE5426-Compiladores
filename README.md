@@ -27,12 +27,33 @@ A linguagem escolhida foi **Java**.
    make run FILE=resources/instances/test/simpleCode1.txt
      ```
    
-   Para visualizar a Árvore de Sintaxe Abstrata (AST) gerada durante a
-   execução, adicione `ARGS=--showTree` ao comando `make run`:
+   Para visualizar as **Árvores de Expressão** em um formato de imagem, adicione `ARGS=--showTree` ao comando `make run`
    
    ```sh
    make run FILE=resources/instances/test/dimensions.txt ARGS=--showTree
    ```
+   Mesmo sem essa flag, as árvores de expressão são exibidas no terminal, mas graficamente elas são mais fáceis de entender.
+
+   Segue um exemplo:
+   ```sh
+       make run FILE=resources/instances/test/simpleCode1.txt ARGS=--showTree
+   ```
+   Código do `simpleCode1.txt`:
+
+   ```txt
+   def main(){
+       int x;
+       x = 10;
+       if (x > 5){
+           print x;
+       }
+   }
+   ```
+   
+    Imagem gerada:
+
+    ![Árvore de Expressão](docs/arvoreSimpleCode1.png)
+
 
 ## Exemplos de entrada
 Veja exemplos em `resources/instances/test` para testar diferentes aspectos do compilador. 
@@ -49,7 +70,7 @@ para executá-los, basta utilizar o(s) seguinte(s) comando(s):
 ```sh
   make run FILE=resources/instances/program/fabric.txt
 ```
-**OBS**: Lembre-se de adicionar ARGS=--showTree para visualizar a AST.
+**OBS**: Lembre-se de adicionar ARGS=--showTree para visualizar as Árvores de Expressão.
 
 ## Detalhes de implementação
 - **Análise Léxica**: O autômato utilizado para a etapa de Análise Léxica está localizado em `resources/automaton.json`. 
