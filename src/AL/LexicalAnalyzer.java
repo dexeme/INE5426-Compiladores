@@ -103,7 +103,7 @@ public class LexicalAnalyzer {
                         try {
                             TokenEnum type = classifyToken(lexemeStr, currentState, lineNumber, column);
                             Token lex = new Token(type, lexemeStr, lineNumber, column);
-                            if (type == TokenEnum.IDENT) {
+                            if (type == TokenEnum.IDENT && !symbolTable.existsInCurrentScope(lex.value())) {
                                 symbolTable.add(lex);
                             }
                             tokens.add(lex);

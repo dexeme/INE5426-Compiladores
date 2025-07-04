@@ -157,7 +157,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
         String leftResult = node.getLeft().accept(this);
         String rightResult = node.getRight().accept(this);
         String temp = newTemp();
-        instructions.add(temp + " = " + leftResult + " " + node.getOperator() + " " + rightResult);
+        instructions.add(temp + " = " + leftResult + " " + node.getOperator().value() + " " + rightResult);
         return temp;
     }
 
@@ -207,7 +207,7 @@ public class IntermediateCodeGenerator extends GenericVisitor<String> {
     public String visit(UnaryOpNode node) {
         String exprResult = node.getExpressionNode().accept(this);
         String temp = newTemp();
-        instructions.add(temp + " = " + node.getOperator() + " " + exprResult);
+        instructions.add(temp + " = " + node.getOperator().value() + " " + exprResult);
         return temp;
     }
 

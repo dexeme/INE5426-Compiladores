@@ -1,12 +1,12 @@
 package AST;
 
-import Semantics.ASTVisitor;
+import Lexical.Token;
 
 public class UnaryOpNode implements ExpressionNode {
     private final ExpressionNode expressionNode;
-    private final String operator;
+    private final Token operator;
 
-    public UnaryOpNode(ExpressionNode expressionNode, String operator) {
+    public UnaryOpNode(ExpressionNode expressionNode, Token operator) {
         this.expressionNode = expressionNode;
         this.operator = operator;
     }
@@ -15,7 +15,7 @@ public class UnaryOpNode implements ExpressionNode {
         return expressionNode;
     }
 
-    public String getOperator() {
+    public Token getOperator() {
         return operator;
     }
 
@@ -24,6 +24,6 @@ public class UnaryOpNode implements ExpressionNode {
 
     @Override
     public String toTree(String indent) {
-        return indent + "UnaryOpNode " + operator + "\n" + expressionNode.toTree(indent + "  ");
+        return indent + "UnaryOpNode " + operator.value() + "\n" + expressionNode.toTree(indent + "  ");
     }
 }

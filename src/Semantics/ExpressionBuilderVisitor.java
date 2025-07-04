@@ -113,8 +113,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
         Type right = node.getRight().accept(this);
         if (left == Type.ERROR || right == Type.ERROR) return Type.ERROR;
         if (left != right) {
-            Token tok = new Token(TokenEnum.IDENT, node.getOperator(), 0, 0);
-            errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, tok));
+            errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, node.getOperator()));
             return Type.ERROR;
         }
         return left;

@@ -310,10 +310,10 @@ public class SyntaxAnalyzer {
         ExpressionNode left = parseNumExpression();
         switch (lookahead.type()) {
             case LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUAL, GREATER_THAN_OR_EQUAL, EQUALS, NOT_EQUALS -> {
-                TokenEnum operator = lookahead.type();
+                Token operator = lookahead;
                 consume();
                 ExpressionNode right = parseNumExpression();
-                return new BinaryOpNode(left, operator.name(), right);
+                return new BinaryOpNode(left, operator, right);
             }
             case CLOSE_PAREN, SEMICOLON -> {
                 return left;
@@ -325,10 +325,10 @@ public class SyntaxAnalyzer {
     private ExpressionNode parseNumExpression() {
         ExpressionNode left = parseTerm();
         while (lookahead.type() == TokenEnum.PLUS || lookahead.type() == TokenEnum.MINUS) {
-            TokenEnum operator = lookahead.type();
+            Token operator = lookahead;
             consume();
             ExpressionNode right = parseTerm();
-            left = new BinaryOpNode(left, operator.name(), right);
+            left = new BinaryOpNode(left, operator, right);
         }
         return left;
     }
@@ -336,10 +336,10 @@ public class SyntaxAnalyzer {
     private ExpressionNode parseTerm() {
         ExpressionNode left = parseUnaryExpr();
         while (lookahead.type() == TokenEnum.MULTIPLY || lookahead.type() == TokenEnum.DIVIDE || lookahead.type() == TokenEnum.MODULO) {
-            TokenEnum operator = lookahead.type();
+            Token operator = lookahead;
             consume();
             ExpressionNode right = parseUnaryExpr();
-            left = new BinaryOpNode(left, operator.name(), right);
+            left = new BinaryOpNode(left, operator, right);
         }
         switch (lookahead.type()) {
             case CLOSE_PAREN, SEMICOLON, CLOSE_BRACKET, PLUS, MINUS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUAL ,
@@ -356,10 +356,10 @@ public class SyntaxAnalyzer {
                 return parseFactor();
             }
             case PLUS, MINUS -> {
-                TokenEnum operator = lookahead.type();
+                Token operator = lookahead;
                 consume();
                 ExpressionNode factor = parseFactor();
-                return new UnaryOpNode(factor, operator.name());
+                return new UnaryOpNode(factor, operator);
             }
             default -> {
                 throw new SyntaxException("Unexpected token in unary expression: " + lookahead.type(), lookahead);
