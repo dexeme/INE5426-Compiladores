@@ -1,0 +1,136 @@
+def imprimeSeparador() {
+    print "------------------------------------";
+}
+
+def analisaAluno(int id, float nota, int faltas) {
+    print "Analisando Aluno ID:";
+    print id;
+    print "Nota:";
+    print nota;
+    print "Faltas:";
+    print faltas;
+
+    if (faltas > 20) {
+        print "Status: REPROVADO POR FALTAS";
+    } else {
+        if (nota >= 7.0) {
+            print "Status: APROVADO";
+        } else {
+            if (nota >= 5.0) {
+                print "Status: RECUPERACAO";
+            } else {
+                print "Status: REPROVADO";
+            }
+        }
+    }
+}
+
+def calculaEstatisticas(float notas) {
+    int i;
+    float maiorNota;
+    float menorNota;
+    int varVoid;
+
+    maiorNota = notas[0];
+    menorNota = notas[0];
+
+    for (i = 1; i < 10; i = i + 1) {
+        if (notas[i] > maiorNota) {
+            maiorNota = notas[i];
+        }
+        if (notas[i] < menorNota) {
+            menorNota = notas[i];
+        }
+    }
+
+    varVoid = imprimeSeparador();
+    print "Estatisticas da Turma:";
+    print "Maior Nota:";
+    print maiorNota;
+    print "Menor Nota:";
+    print menorNota;
+}
+
+def main() {
+    int i;
+    float soma;
+    float media;
+    int ids[10];
+    float notas[10];
+    int faltas[10];
+    int varVoid;
+
+    varVoid = imprimeSeparador();
+    print "Sistema de Análise de Notas da Turma";
+    varVoid = imprimeSeparador();
+
+    ids[0] = 101;
+    notas[0] = 8.5;
+    faltas[0] = 4;
+
+    ids[1] = 102;
+    notas[1] = 4.9;
+    faltas[1] = 12;
+
+    ids[2] = 103;
+    notas[2] = 7.0;
+    faltas[2] = 8;
+
+    ids[3] = 104;
+    notas[3] = 9.2;
+    faltas[3] = 2;
+
+    ids[4] = 105;
+    notas[4] = 6.5;
+    faltas[4] = 18;
+
+    ids[5] = 106;
+    notas[5] = 3.2;
+    faltas[5] = 22;
+
+    ids[6] = 107;
+    notas[6] = 8.8;
+    faltas[6] = 0;
+
+    ids[7] = 108;
+    notas[7] = 5.0;
+    faltas[7] = 10;
+
+    ids[8] = 109;
+    notas[8] = 7.5;
+    faltas[8] = 6;
+
+    ids[9] = 110;
+    notas[9] = 9.8;
+    faltas[9] = 4;
+
+    soma = 0.0;
+    for (i = 0; i < 10; i = i + 1) {
+        int id;
+        float nota;
+        int falta;
+
+        id = ids[i];
+        nota = notas[i];
+        falta = faltas[i];
+        varVoid = analisaAluno(id, nota, falta);
+        soma = soma + notas[i];
+        varVoid = imprimeSeparador();
+    }
+
+    media = soma / 10.0;
+    print "Analise Final da Turma:";
+    print "Media da Turma:";
+    print media;
+
+    if (media >= 7.0) {
+        print "Parabens, a turma teve um bom desempenho!";
+    } else {
+        print "A turma precisa melhorar o desempenho.";
+    }
+
+    varVoid = calculaEstatisticas(notas);
+    varVoid = imprimeSeparador();
+
+    print "Fim do programa.";
+}

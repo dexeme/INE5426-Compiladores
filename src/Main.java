@@ -14,6 +14,10 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
+        if (args.length != 1){
+            System.out.println("Usage: java Main <input_file>");
+            return;
+        }
         String automatonFilePath = "resources/automaton.json";
 
         Automaton automaton = AutomatonReader.readAutomaton(automatonFilePath);
@@ -23,7 +27,11 @@ public class Main {
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
             String inputFilePath = args[0];
-            Scanner scanner = new Scanner(new java.io.File(inputFilePath));
+            java.io.File inputFile = new java.io.File(inputFilePath);
+            if (!inputFile.exists()) {
+                throw new java.io.FileNotFoundException("Arquivo de entrada não encontrado: " + inputFilePath);
+            }
+            Scanner scanner = new Scanner(inputFile);
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -34,7 +42,7 @@ public class Main {
             System.err.println(Messages.ERROR_READING_FILE + e.getMessage());
             return;
         }
-
+        long startTime = System.currentTimeMillis();
         List<Token> tokens = lexicalAnalyzer.analyzeCode(sourceCode);
 
         System.out.println(Messages.SYMBOL_TABLE_HEADER);
@@ -56,7 +64,6 @@ public class Main {
         System.out.println(Messages.NO_SYNTAX_ERRORS);
         System.out.println(Messages.AST_HEADER);
         System.out.println(ast.toTree());
-//        TreeVisualizer.generateTreeImage(ast.toTree(), false);
 
         SemanticAnalyzer sem = new SemanticAnalyzer();
         sem.analyze(ast);
@@ -77,9 +84,11 @@ public class Main {
                 System.out.println(instruction);
             }
         }
+        long endTime = System.currentTimeMillis();
 
-        System.out.println("\n===== ÁRVORE DE ESCOPOS (TABELAS DE SÍMBOLOS) =====");
+        System.out.println("\n===== Scopes =====");
         sem.printScopeTree();
+        System.out.println("Compilation time: " + (endTime - startTime) + " ms");
     }
 
 }

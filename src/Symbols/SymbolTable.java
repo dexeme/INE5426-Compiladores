@@ -50,9 +50,8 @@ public class SymbolTable {
         StringBuilder sb = new StringBuilder();
         SymbolEntry current = head;
         while (current != null) {
-            String token = current.token().toString();
             String formattedToken = String.format("\tNome: %s | Tipo: %s | Posição: (linha %d, coluna %d)",
-                    token.substring(token.indexOf("'"), token.lastIndexOf("'")),
+                    current.token().value(),
                     current.type() != null ? current.type() : "-",
                     current.token().line(),
                     current.token().column()

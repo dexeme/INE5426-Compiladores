@@ -34,7 +34,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     private void printScopeTreeDFS(ScopeTreeNode node, int depth) {
         if (node.getTable().getHead() != null) {
-            System.out.println("Escopo nível " + depth + ":");
+            System.out.println("Scope level " + depth + ":");
             System.out.println(node.getTable());
         }
         for (ScopeTreeNode child : node.getChildren()) {
