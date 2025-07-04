@@ -55,7 +55,12 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     // ----- Visitor methods -----
     @Override
     public Type visit(ProgramNode node) {
-        for (ASTNode fn : node.getFunctions()) fn.accept(this);
+        for (ASTNode fn : node.getFunctions()) {
+            if (fn instanceof FunctionNode functionNode) {
+                currentScope.getTable().add(functionNode.getFunctionIdentifier(), Type.VOID);
+            }
+            fn.accept(this);
+        }
         return Type.VOID;
     }
 
