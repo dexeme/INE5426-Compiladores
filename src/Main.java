@@ -1,4 +1,3 @@
-import AST.TreeVisualizer;
 import Lexical.Automaton;
 import Lexical.AutomatonReader;
 import Lexical.Token;
@@ -23,7 +22,7 @@ public class Main {
 
         Map<Integer, String> sourceCode = new LinkedHashMap<>();
         try {
-            String inputFilePath = "resources/instances/intermediateCode.txt";
+            String inputFilePath = args[0];
             Scanner scanner = new Scanner(new java.io.File(inputFilePath));
             int lineNumber = 1;
             while (scanner.hasNextLine()) {
@@ -78,6 +77,9 @@ public class Main {
                 System.out.println(instruction);
             }
         }
+
+        System.out.println("\n===== ÁRVORE DE ESCOPOS (TABELAS DE SÍMBOLOS) =====");
+        sem.printScopeTree();
     }
 
 }

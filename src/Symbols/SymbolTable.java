@@ -12,19 +12,6 @@ public class SymbolTable {
         scopeLevel = 0;
     }
 
-    public void enterScope() {
-        scopeLevel++;
-    }
-
-    public void exitScope() {
-        while (head != null && head.scope() == scopeLevel) {
-            head = head.next();
-        }
-        if (scopeLevel > 0) {
-            scopeLevel--;
-        }
-    }
-
     public void add(Token token) {
         head = new SymbolEntry(token, null, scopeLevel, head);
     }
@@ -58,16 +45,19 @@ public class SymbolTable {
         return head;
     }
 
-    public int getScopeLevel() {
-        return scopeLevel;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         SymbolEntry current = head;
         while (current != null) {
-            sb.append(current.token()).append(", scope=").append(current.scope()).append('\n');
+            String token = current.token().toString();
+            String formattedToken = String.format("\tNome: %s | Tipo: %s | Posição: (linha %d, coluna %d)",
+                    token.substring(token.indexOf("'"), token.lastIndexOf("'")),
+                    current.type() != null ? current.type() : "-",
+                    current.token().line(),
+                    current.token().column()
+            );
+            sb.insert(0, formattedToken + "\n");
             current = current.next();
         }
         return sb.toString();

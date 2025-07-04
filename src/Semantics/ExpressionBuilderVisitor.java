@@ -5,14 +5,15 @@ import Lexical.TokenEnum;
 import AST.*;
 import Constants.Messages;
 import Symbols.SymbolEntry;
-import Symbols.SymbolTable;
+import Symbols.ScopeTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** Visitor that performs semantic checks while traversing the AST. */
 public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
-    protected final SymbolTable symbols = new SymbolTable();
+    protected ScopeTreeNode rootScope;
+    protected ScopeTreeNode currentScope;
     protected final List<SemanticException> errors = new ArrayList<>();
     private int loopDepth = 0;
 
@@ -22,8 +23,23 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     public void analyze(ProgramNode program) {
         errors.clear();
-        symbols.clear();
+        rootScope = new ScopeTreeNode(null);
+        currentScope = rootScope;
         program.accept(this);
+    }
+
+    public void printScopeTree() {
+        printScopeTreeDFS(rootScope, 0);
+    }
+
+    private void printScopeTreeDFS(ScopeTreeNode node, int depth) {
+        if (node.getTable().getHead() != null) {
+            System.out.println("Escopo nível " + depth + ":");
+            System.out.println(node.getTable());
+        }
+        for (ScopeTreeNode child : node.getChildren()) {
+            printScopeTreeDFS(child, depth + 1);
+        }
     }
 
     private Type fromString(String t) {
@@ -45,29 +61,29 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(FunctionNode node) {
-        symbols.enterScope();
+        currentScope = currentScope.addChild();
         for (Parameter p : node.getParameters()) {
             Token tok = new Token(TokenEnum.IDENT, p.name(), 0, 0);
-            symbols.add(tok, fromString(p.type()));
+            currentScope.getTable().add(tok, fromString(p.type()));
         }
         for (StatementNode st : node.getBody()) st.accept(this);
-        symbols.exitScope();
+        currentScope = currentScope.getParent();
         return Type.VOID;
     }
 
     @Override
     public Type visit(VarDeclNode node) {
-        if (symbols.existsInCurrentScope(node.getVariableIdentifier().value())) {
+        if (currentScope.getTable().existsInCurrentScope(node.getVariableIdentifier().value())) {
             errors.add(new SemanticException(Messages.ERROR_DUPLICATE_DECL, node.getVariableIdentifier()));
         } else {
-            symbols.add(node.getVariableIdentifier(), fromString(node.getType()));
+            currentScope.getTable().add(node.getVariableIdentifier(), fromString(node.getType()));
         }
         return Type.VOID;
     }
 
     @Override
     public Type visit(AssignmentNode node) {
-        SymbolEntry entry = symbols.lookup(node.getLeft().getVariableIdentifier().value());
+        SymbolEntry entry = lookupSymbol(node.getLeft().getVariableIdentifier().value());
         if (entry == null) {
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getLeft().getVariableIdentifier()));
             node.getRight().accept(this); // still visit expression
@@ -79,6 +95,16 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
             errors.add(new SemanticException(Messages.ERROR_TYPE_MISMATCH, node.getLeft().getVariableIdentifier()));
         }
         return entry.type();
+    }
+
+    private SymbolEntry lookupSymbol(String name) {
+        ScopeTreeNode node = currentScope;
+        while (node != null) {
+            SymbolEntry entry = node.getTable().lookup(name);
+            if (entry != null) return entry;
+            node = node.getParent();
+        }
+        return null;
     }
 
     @Override
@@ -96,7 +122,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(VarNode node) {
-        SymbolEntry entry = symbols.lookup(node.getVariableIdentifier().value());
+        SymbolEntry entry = lookupSymbol(node.getVariableIdentifier().value());
         if (entry == null) {
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getVariableIdentifier()));
             return Type.ERROR;
@@ -136,7 +162,7 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(ReadNode node) {
-        SymbolEntry entry = symbols.lookup(node.getVariable().getVariableIdentifier().value());
+        SymbolEntry entry = lookupSymbol(node.getVariable().getVariableIdentifier().value());
         if (entry == null) {
             errors.add(new SemanticException(Messages.ERROR_UNDECLARED_VAR, node.getVariable().getVariableIdentifier()));
         }
@@ -151,27 +177,27 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
     @Override
     public Type visit(IfNode node) {
         node.getCondition().accept(this);
-        symbols.enterScope();
+        currentScope = currentScope.addChild();
         for (StatementNode st : node.getThenBranch()) st.accept(this);
-        symbols.exitScope();
+        currentScope = currentScope.getParent();
         if (node.getElseBranch() != null) {
-            symbols.enterScope();
+            currentScope = currentScope.addChild();
             for (StatementNode st : node.getElseBranch()) st.accept(this);
-            symbols.exitScope();
+            currentScope = currentScope.getParent();
         }
         return Type.VOID;
     }
 
     @Override
     public Type visit(ForNode node) {
-        symbols.enterScope();
+        currentScope = currentScope.addChild();
         loopDepth++;
         if (node.getInit() != null) node.getInit().accept(this);
         if (node.getCondition() != null) node.getCondition().accept(this);
         if (node.getIncrement() != null) node.getIncrement().accept(this);
         if (node.getBody() != null) { node.getBody().accept(this); }
         loopDepth--;
-        symbols.exitScope();
+        currentScope = currentScope.getParent();
         return Type.VOID;
     }
 
@@ -191,11 +217,11 @@ public class ExpressionBuilderVisitor extends GenericVisitor<Type> {
 
     @Override
     public Type visit(BlockNode node) {
-        symbols.enterScope();
+        currentScope = currentScope.addChild();
         for (StatementNode st : node.getNodes()) {
             st.accept(this);
         }
-        symbols.exitScope();
+        currentScope = currentScope.getParent();
         return Type.VOID;
     }
 
